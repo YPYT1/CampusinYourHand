@@ -5,13 +5,13 @@ interface UserType{
   id:number,
   studentId:string,
   name:string,
-  avatar:string
+  avatar:Resource
   class:string
 }
 
 interface NewUser{
   name:string,
-  avatar:string,
+  avatar:Resource,
   class:string
 }
 
@@ -20,7 +20,7 @@ interface NewUser{
 
 export struct ProfilePage {
   @State UserList:UserType[] = [
-    {id:1, studentId:"114514", name:"MOMO", class:"软件工程2022级", avatar:"https://i0.hdslb.com/bfs/article/3ec92424b890098156d9218ec1338bda8032db6f.jpg"}
+    {id:1, studentId:"114514", name:"MOMO", class:"软件工程2022级", avatar:$r('app.media.img')}
   ]
 
   aboutToAppear(): void {

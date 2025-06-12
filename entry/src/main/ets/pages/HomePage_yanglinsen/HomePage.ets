@@ -9,7 +9,7 @@ interface Activity {
   title: string
   time: string
   location: string
-  image: string
+  image: Resource
   status: string
 }
 
@@ -44,7 +44,7 @@ export struct HomePage {
       title: 'HarmonyOS 技术分享会',
       time: '今天 19:00 - 21:00',
       location: '教学楼 B201',
-      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=200&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '火热报名中'
     },
     {
@@ -52,7 +52,7 @@ export struct HomePage {
       title: '校园摄影大赛作品展',
       time: '周三至周五 全天',
       location: '图书馆一楼大厅',
-      image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=200&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '已结束'
     },
     {
@@ -60,7 +60,7 @@ export struct HomePage {
       title: '王者荣耀比赛',
       time: '周六至周天 全天',
       location: '电竞一楼大厅',
-      image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=200&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '火热报名中'
     },
     {
@@ -68,7 +68,7 @@ export struct HomePage {
       title: '校园摇滚音乐节',
       time: '下周五 19:30',
       location: '学校操场',
-      image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=200&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '火热报名中'
     }
   ]
@@ -510,7 +510,7 @@ export struct HomePage {
       Column() {
         // User Info
         Row() {
-          Image('https://images.unsplash.com/photo-1577202214328-c04b77cefb5d?w=100&h=100&fit=crop')
+          Image($r('app.media.img'))
             .width(48)
             .height(48)
             .borderRadius(24)

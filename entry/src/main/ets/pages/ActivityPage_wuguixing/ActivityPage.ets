@@ -8,7 +8,7 @@ interface Activity {
   title: string
   time: string
   location: string
-  image: string
+  image: Resource
   status: string
   type: string
   participants: number
@@ -36,7 +36,7 @@ export struct ActivityPage {
       title: 'HarmonyOS 技术分享会',
       time: '今天 19:00 - 21:00',
       location: '教学楼 B201',
-      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '火热报名中',
       type: '技术讲座',
       participants: 23,
@@ -49,7 +49,7 @@ export struct ActivityPage {
       title: '校园摄影大赛作品展',
       time: '周三至周五 全天',
       location: '图书馆一楼大厅',
-      image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=300&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '进行中',
       type: '艺术展览',
       participants: 156,
@@ -62,7 +62,7 @@ export struct ActivityPage {
       title: '王者荣耀校园联赛',
       time: '周六至周天 全天',
       location: '电竞馆一楼',
-      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '火热报名中',
       type: '电竞比赛',
       participants: 89,
@@ -75,7 +75,7 @@ export struct ActivityPage {
       title: '创业分享交流会',
       time: '下周二 14:00 - 16:00',
       location: '创新创业中心',
-      image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=300&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '即将开始',
       type: '创业讲座',
       participants: 45,
@@ -88,7 +88,7 @@ export struct ActivityPage {
       title: '春季运动会',
       time: '下周五-六 08:00 - 18:00',
       location: '学校田径场',
-      image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=300&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '火热报名中',
       type: '体育赛事',
       participants: 234,
@@ -101,7 +101,7 @@ export struct ActivityPage {
       title: '音乐节演出',
       time: '下周日 19:00 - 22:00',
       location: '学校大礼堂',
-      image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop',
+      image: $r('app.media.img'),
       status: '火热报名中',
       type: '文艺演出',
       participants: 167,
