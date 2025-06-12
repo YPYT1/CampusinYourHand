@@ -504,59 +504,6 @@ export struct HomePage {
     }
   }
 
-  @Builder
-  TabBarBuilder() {
-    Row() {
-      ForEach([
-        { icon: '\u{1F3E0}', text: '首页', isActive: true },
-        { icon: '\u{1F4DD}', text: '活动', isActive: false },
-        { icon: '\u{1F4CB}', text: '记录', isActive: false },
-        { icon: '\u{1F464}', text: '我的', isActive: false }
-      ] as TabItem[], (item: TabItem) => {
-        Column() {
-          Text(item.icon)
-            .fontSize(24)
-          Text(item.text)
-            .fontSize(10)
-            .fontWeight(FontWeight.Medium)
-            .fontColor(item.isActive ? '#007AFF' : '#8E8E93')
-        }
-        .layoutWeight(1)
-        .alignItems(HorizontalAlign.Center)
-        .justifyContent(FlexAlign.Center)
-        .onClick(() => {
-          if (item.text === '活动') {
-            router.pushUrl({
-              url: 'pages/ActivityPage_wuguixing/ActivityPage'
-            })
-          } else if (item.text === '记录') {
-            router.pushUrl({
-              url: 'pages/RecordsPage_yangyang/RecordsPage'
-            })
-          } else if (item.text === '我的') {
-            router.pushUrl({
-              url: 'pages/ProfilePage_luojiaxin/ProfilePage'
-            })
-          }
-        })
-      })
-    }
-    .width('100%')
-    .height(55)
-    .backgroundColor('rgba(255, 255, 255, 0.85)')
-    .backdropBlur(10)
-    .border({ width: { top: 1 }, color: '#E5E5EA' })
-    .padding({ top: 20, bottom: 8 })
-    .position({ x: 0, y: '100%' })
-    .translate({ y: -55 })
-    .zIndex(6)
-    .alignItems(VerticalAlign.Center)
-    .onClick(() => {
-      // 点击Tab Bar区域时，让搜索框失去焦点
-      this.showSearchHistory = false
-    })
-  }
-
   build() {
     Stack() {
       // Header Section with gradient background
@@ -715,14 +662,14 @@ export struct HomePage {
                         .padding({ left: 10, right: 10, top: 4, bottom: 4 })
                         .margin({ top: 8 })
 
-                                    Image(this.favoriteStates.get(item.id) ? $r('app.media.souc') : $r('app.media.sous'))
-                .width(24)
-                .height(24)
-                .margin({ left: 96, top: 8 })
-                .position({ x: 96 })
-                .onClick(() => {
-                  this.toggleFavorite(item)
-                })
+                      Image(this.favoriteStates.get(item.id) ? $r('app.media.souc') : $r('app.media.sous'))
+                        .width(24)
+                        .height(24)
+                        .margin({ left: 96, top: 8 })
+                        .position({ x: 96 })
+                        .onClick(() => {
+                          this.toggleFavorite(item)
+                        })
                     }
                   }
                   .alignItems(HorizontalAlign.Start)
@@ -757,9 +704,6 @@ export struct HomePage {
         // 点击Scroll区域时，让搜索框失去焦点
         this.showSearchHistory = false
       })
-
-      // Tab Bar
-      this.TabBarBuilder()
     }
     .width('100%')
     .height('100%')

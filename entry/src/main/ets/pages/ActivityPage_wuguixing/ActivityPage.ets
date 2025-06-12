@@ -1,5 +1,7 @@
 import router from '@ohos.router'
 import { CommonCard } from '../../common/components/CommonCard'
+import dataPreferences from '@ohos.data.preferences'
+import prompt from '@ohos.prompt'
 
 interface Activity {
   id: string
@@ -12,6 +14,17 @@ interface Activity {
   participants: number
   maxParticipants: number
   description: string
+  isRegistered?: boolean  // 添加报名状态
+}
+
+interface Record {
+  title: string
+  time: string
+  location: string
+  status: '已预约' | '已参加' | '已取消' | '已过期'
+  showQRCode?: boolean
+  canRate?: boolean
+  canCancel?: boolean
 }
 
 @Entry
@@ -28,7 +41,8 @@ export struct ActivityPage {
       type: '技术讲座',
       participants: 23,
       maxParticipants: 100,
-      description: '深入了解HarmonyOS开发技术，分享实际项目经验'
+      description: '深入了解HarmonyOS开发技术，分享实际项目经验',
+      isRegistered: false
     },
     {
       id: '2',
@@ -40,7 +54,8 @@ export struct ActivityPage {
       type: '艺术展览',
       participants: 156,
       maxParticipants: 200,
-      description: '展示学生优秀摄影作品，感受艺术之美'
+      description: '展示学生优秀摄影作品，感受艺术之美',
+      isRegistered: false
     },
     {
       id: '3',
@@ -52,7 +67,8 @@ export struct ActivityPage {
       type: '电竞比赛',
       participants: 89,
       maxParticipants: 128,
-      description: '校园电竞盛事，展现你的游戏技巧'
+      description: '校园电竞盛事，展现你的游戏技巧',
+      isRegistered: false
     },
     {
       id: '4',
@@ -64,7 +80,8 @@ export struct ActivityPage {
       type: '创业讲座',
       participants: 45,
       maxParticipants: 80,
-      description: '优秀校友分享创业经验和心得'
+      description: '优秀校友分享创业经验和心得',
+      isRegistered: false
     },
     {
       id: '5',
@@ -76,7 +93,8 @@ export struct ActivityPage {
       type: '体育赛事',
       participants: 234,
       maxParticipants: 500,
-      description: '展现青春活力，挑战运动极限'
+      description: '展现青春活力，挑战运动极限',
+      isRegistered: false
     },
     {
       id: '6',
@@ -88,22 +106,29 @@ export struct ActivityPage {
       type: '文艺演出',
       participants: 167,
       maxParticipants: 300,
-      description: '精彩的音乐演出，感受艺术魅力'
+      description: '精彩的音乐演出，感受艺术魅力',
+      isRegistered: false
     }
   ]
   
   @State selectedCategory: string = '全部'
-  @State filteredActivities: Activity[] = this.activities
+  @State filteredActivities: Activity[] = this.activities.slice()
   
   private categories: string[] = ['全部', '技术讲座', '艺术展览', '电竞比赛', '创业讲座', '体育赛事', '文艺演出']
+  private preferences: dataPreferences.Preferences | null = null
 
-  aboutToAppear() {
-    this.filterActivities()
+  async aboutToAppear() {
+    try {
+      this.preferences = await dataPreferences.getPreferences(getContext(), 'activity_preferences')
+      this.filterActivities()
+    } catch (err) {
+      console.error('Failed to get preferences:', err)
+    }
   }
 
   filterActivities() {
     if (this.selectedCategory === '全部') {
-      this.filteredActivities = this.activities
+      this.filteredActivities = this.activities.slice()
     } else {
       this.filteredActivities = this.activities.filter(activity => activity.type === this.selectedCategory)
     }
@@ -136,6 +161,83 @@ export struct ActivityPage {
         return '#F0F8F4'
       default:
         return '#F5F5F5'
+    }
+  }
+
+  // 修改报名处理函数
+  async handleRegistration(activity: Activity) {
+    if (activity.status === '火热报名中' && !activity.isRegistered) {
+      // 创建新的活动数组以触发状态更新
+      const updatedActivities = this.activities.map(a => {
+        if (a.id === activity.id) {
+          const updatedActivity: Activity = {
+            id: a.id,
+            title: a.title,
+            time: a.time,
+            location: a.location,
+            image: a.image,
+            status: a.status,
+            type: a.type,
+            participants: a.participants + 1,
+            maxParticipants: a.maxParticipants,
+            description: a.description,
+            isRegistered: true
+          }
+          return updatedActivity
+        }
+        return a
+      })
+      
+      // 更新活动列表
+      this.activities = updatedActivities.slice()
+      
+      // 更新过滤后的活动列表
+      this.filterActivities()
+
+      // 添加到预约记录
+      const newRecord: Record = {
+        title: activity.title,
+        time: activity.time,
+        location: activity.location,
+        status: '已预约',
+        canCancel: true,
+        showQRCode: true
+      }
+
+      try {
+        if (this.preferences) {
+          // 获取现有记录
+          let records: Record[] = []
+          const storedRecords = await this.preferences.get('user_records', '[]')
+          if (storedRecords && storedRecords !== '[]') {
+            try {
+              records = JSON.parse(storedRecords as string)
+            } catch (e) {
+              console.error('Failed to parse stored records:', e)
+              records = []
+            }
+          }
+
+          // 添加新记录
+          records.unshift(newRecord)
+
+          // 保存记录
+          await this.preferences.put('user_records', JSON.stringify(records))
+          await this.preferences.flush()
+
+          // 显示成功提示
+          prompt.showToast({
+            message: '报名成功！',
+            duration: 2000
+          })
+        }
+      } catch (err) {
+        console.error('Failed to save record:', err)
+        prompt.showToast({
+          message: '保存记录失败',
+          duration: 2000
+        })
+      }
     }
   }
 
@@ -186,9 +288,9 @@ export struct ActivityPage {
               .alignSelf(ItemAlign.Start)
               .margin({ bottom: 12 })
 
-            Scroll() {
-              Row() {
-                ForEach(this.categories, (category: string) => {
+            List() {
+              ForEach(this.categories, (category: string) => {
+                ListItem() {
                   Text(category)
                     .fontSize(14)
                     .fontWeight(FontWeight.Medium)
@@ -201,12 +303,13 @@ export struct ActivityPage {
                       this.selectedCategory = category
                       this.filterActivities()
                     })
-                })
-              }
-              .width('100%')
+                }
+              })
             }
-            .scrollable(ScrollDirection.Horizontal)
-            .scrollBar(BarState.Off)
+            .listDirection(Axis.Horizontal)
+            .width('100%')
+            .height(40)
+            .padding({ right: 16 })
           }
           .width('100%')
           .padding(16)
@@ -386,15 +489,23 @@ export struct ActivityPage {
                       })
                     })
 
-                  Button(activity.status === '火热报名中' ? '立即报名' : '了解更多')
+                  Button(activity.isRegistered ? '已报名' : 
+                    (activity.status === '火热报名中' ? '立即报名' : 
+                    (activity.status === '进行中' ? '进行中' : 
+                    (activity.status === '即将开始' ? '即将开始' : '已结束'))))
                     .fontSize(14)
                     .fontColor(Color.White)
-                    .backgroundColor(activity.status === '火热报名中' ? '#FF6B6B' : '#667eea')
+                    .backgroundColor(activity.isRegistered ? '#4ECDC4' : 
+                      (activity.status === '火热报名中' ? '#FF6B6B' : 
+                      (activity.status === '进行中' ? '#4ECDC4' : 
+                      (activity.status === '即将开始' ? '#45B7D1' : '#96CEB4'))))
                     .borderRadius(20)
                     .height(36)
                     .layoutWeight(1)
                     .onClick(() => {
-                      // 处理报名或了解更多逻辑
+                      if (activity.status === '火热报名中' && !activity.isRegistered) {
+                        this.handleRegistration(activity)
+                      }
                     })
                 }
                 .width('100%')
