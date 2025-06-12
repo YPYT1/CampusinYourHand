@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>掌上校园活动预约 - HarmonyOS App 原型</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page-title">
+  <h2>页面一：首页 (HomePage.ets)</h2>
+  <p>负责人：成员A</p>
+</div>
+<div class="phone-mockup">
+  <div class="status-bar">
+    <span>10:24</span>
+    <div class="time"></div>
+    <span>📶 🔋</span>
+  </div>
+
+  <div class="screen-content">
+    <header class="home-header">
+      <div class="user-info">
+        <img src="https://images.unsplash.com/photo-1577202214328-c04b77cefb5d?w=100&h=100&fit=crop" alt="User Avatar">
+        <div class="text">
+          <h3>下午好, 同学</h3>
+          <p>今天也是充满活力的一天</p>
+        </div>
+      </div>
+      <div class="search-bar">
+        <svg class="icon-svg" viewBox="0 0 1024 1024"><path d="M424.3 787.7c-199.1 0-360.6-161.5-360.6-360.6S225.2 66.5 424.3 66.5s360.6 161.5 360.6 360.6-161.5 360.6-360.6 360.6z m0-641.2c-155 0-280.6 125.6-280.6 280.6s125.6 280.6 280.6 280.6 280.6-125.6 280.6-280.6-125.6-280.6-280.6-280.6z"></path><path d="M962.3 995.3c-15.1-15.1-15.1-39.6 0-54.7L769.1 747.3c-15.1-15.1-39.6-15.1-54.7 0-15.1 15.1-15.1 39.6 0 54.7l193.3 193.3c15.1 15.1 39.6 15.1 54.7 0z"></path></svg>
+        <span>搜索你感兴趣的活动</span>
+      </div>
+    </header>
+
+    <div class="card quick-entry-grid">
+      <div class="quick-entry-item"><div class="icon-bg bg-orange">📝</div><span>快捷预约</span></div>
+      <div class="quick-entry-item"><div class="icon-bg bg-green">📷</div><span>扫码签到</span></div>
+      <div class="quick-entry-item"><div class="icon-bg bg-blue">⭐</div><span>我的收藏</span></div>
+      <div class="quick-entry-item"><div class="icon-bg bg-teal">❓</div><span>帮助中心</span></div>
+    </div>
+
+    <h3 class="section-title">热门活动 <a href="#">查看全部 ></a></h3>
+
+    <div class="activity-card">
+      <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=200&h=200&fit=crop" alt="Activity Image">
+      <div class="info">
+        <h4>HarmonyOS 技术分享会</h4>
+        <p><svg class="icon-svg" viewBox="0 0 1024 1024"><path d="M512 943.9c-238.3 0-431.9-193.6-431.9-431.9S273.7 80.1 512 80.1s431.9 193.6 431.9 431.9-193.6 431.9-431.9 431.9z m0-783.9c-194.1 0-352 157.8-352 352s157.8 352 352 352 352-157.8 352-352-157.9-352-352-352z"></path><path d="M543.8 510.3V256.5c0-17.6-14.3-31.8-31.8-31.8s-31.8 14.3-31.8 31.8v285.6c0 17.6 14.3 31.8 31.8 31.8h223.5c17.6 0 31.8-14.3 31.8-31.8s-14.3-31.8-31.8-31.8H543.8z"></path></svg>今天 19:00 - 21:00</p>
+        <p><svg class="icon-svg" viewBox="0 0 1024 1024"><path d="M512 59.5C327.7 59.5 174.4 209.6 174.4 390.3c0 132.8 91.5 319.4 309.8 560.4 11.2 12.4 29.2 12.4 40.4 0 223.4-246.3 304.7-427.6 304.7-560.4C849.6 209.6 696.3 59.5 512 59.5zm0 464.9c-76.3 0-138.2-61.9-138.2-138.2s61.9-138.2 138.2-138.2 138.2 61.9 138.2 138.2-61.9 138.2-138.2 138.2z"></path></svg>教学楼 B201</p>
+        <span class="status-tag ongoing">火热报名中</span>
+      </div>
+    </div>
+    <div class="activity-card">
+      <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=200&h=200&fit=crop" alt="Activity Image">
+      <div class="info">
+        <h4>校园摄影大赛作品展</h4>
+        <p><svg class="icon-svg" viewBox="0 0 1024 1024"><path d="M512 943.9c-238.3 0-431.9-193.6-431.9-431.9S273.7 80.1 512 80.1s431.9 193.6 431.9 431.9-193.6 431.9-431.9 431.9z m0-783.9c-194.1 0-352 157.8-352 352s157.8 352 352 352 352-157.8 352-352-157.9-352-352-352z"></path><path d="M543.8 510.3V256.5c0-17.6-14.3-31.8-31.8-31.8s-31.8 14.3-31.8 31.8v285.6c0 17.6 14.3 31.8 31.8 31.8h223.5c17.6 0 31.8-14.3 31.8-31.8s-14.3-31.8-31.8-31.8H543.8z"></path></svg>周三至周五 全天</p>
+        <p><svg class="icon-svg" viewBox="0 0 1024 1024"><path d="M512 59.5C327.7 59.5 174.4 209.6 174.4 390.3c0 132.8 91.5 319.4 309.8 560.4 11.2 12.4 29.2 12.4 40.4 0 223.4-246.3 304.7-427.6 304.7-560.4C849.6 209.6 696.3 59.5 512 59.5zm0 464.9c-76.3 0-138.2-61.9-138.2-138.2s61.9-138.2 138.2-138.2 138.2 61.9 138.2 138.2-61.9 138.2-138.2 138.2z"></path></svg>图书馆一楼大厅</p>
+        <span class="status-tag ended">已结束</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab-item active"><div class="icon">🏠</div><span>首页</span></div>
+    <div class="tab-item"><div class="icon">📝</div><span>活动</span></div>
+    <div class="tab-item"><div class="icon">📋</div><span>记录</span></div>
+    <div class="tab-item"><div class="icon">👤</div><span>我的</span></div>
+  </div>
+</div>
+
+<div class="page-title">
+  <h2>页面二：活动预约 (ActivityPage.ets)</h2>
+  <p>负责人：成员B</p>
+</div>
+<div class="phone-mockup">
+  <div class="status-bar"><span>10:24</span><span>📶 🔋</span></div>
+
+  <div class="screen-content activity-details-page">
+    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=375&h=250&fit=crop" alt="Activity Cover" class="activity-cover">
+
+    <div class="activity-content">
+      <div class="card title-card">
+        <h3>HarmonyOS 技术分享会</h3>
+        <div class="meta">
+          <p><svg class="icon-svg" viewBox="0 0 1024 1024"><path d="M512 943.9c-238.3 0-431.9-193.6-431.9-431.9S273.7 80.1 512 80.1s431.9 193.6 431.9 431.9-193.6 431.9-431.9 431.9z m0-783.9c-194.1 0-352 157.8-352 352s157.8 352 352 352 352-157.8 352-352-157.9-352-352-352z"></path><path d="M543.8 510.3V256.5c0-17.6-14.3-31.8-31.8-31.8s-31.8 14.3-31.8 31.8v285.6c0 17.6 14.3 31.8 31.8 31.8h223.5c17.6 0 31.8-14.3 31.8-31.8s-14.3-31.8-31.8-31.8H543.8z"></path></svg>今天 19:00 - 21:00</p>
+          <p><svg class="icon-svg" viewBox="0 0 1024 1024"><path d="M512 59.5C327.7 59.5 174.4 209.6 174.4 390.3c0 132.8 91.5 319.4 309.8 560.4 11.2 12.4 29.2 12.4 40.4 0 223.4-246.3 304.7-427.6 304.7-560.4C849.6 209.6 696.3 59.5 512 59.5zm0 464.9c-76.3 0-138.2-61.9-138.2-138.2s61.9-138.2 138.2-138.2 138.2 61.9 138.2 138.2-61.9 138.2-138.2 138.2z"></path></svg>教学楼 B201 (剩余名额: 23/100)</p>
+        </div>
+      </div>
+      <div class="card detail-section"><h4>🏢 主办方</h4><p>计算机学院 & HarmonyOS 技术俱乐部</p></div>
+      <div class="card detail-section"><h4>🌟 特邀嘉宾</h4><div class="guest-list"><div class="guest-item"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop" alt="Guest"><span>王教授</span></div><div class="guest-item"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop" alt="Guest"><span>李学姐</span></div><div class="guest-item"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop" alt="Guest"><span>张学长</span></div></div></div>
+      <div class="card detail-section"><h4>📑 活动流程</h4><div class="agenda-timeline"><div class="agenda-item"><div class="time">19:00 - 19:15</div><div class="desc">开场与介绍</div></div><div class="agenda-item"><div class="time">19:15 - 20:30</div><div class="desc">HarmonyOS 核心技术分享</div></div><div class="agenda-item"><div class="time">20:30 - 21:00</div><div class="desc">Q&A 互动环节</div></div></div></div>
+      <div class="card detail-section"><h4>📌 注意事项</h4><p>1. 请提前10分钟到场签到。<br>2. 现场提供茶点和纪念品。<br>3. 请将手机调至静音模式。</p></div>
+      <div class="card detail-section"><h4>✔️ 填写信息</h4><form><div class="form-group"><label for="name">姓名</label><input type="text" id="name" placeholder="请输入您的真实姓名"></div><div class="form-group"><label for="studentId">学号</label><input type="text" id="studentId" placeholder="请输入您的学号"></div><div class="form-group"><label for="contact">联系方式</label><input type="tel" id="contact" placeholder="请输入您的手机号"></div></form></div>
+    </div>
+    <div class="booking-footer"><button class="btn btn-primary">确认并提交预约</button></div>
+  </div>
+  <div class="tab-bar"><div class="tab-item"><div class="icon">🏠</div><span>首页</span></div><div class="tab-item active"><div class="icon">📝</div><span>活动</span></div><div class="tab-item"><div class="icon">📋</div><span>记录</span></div><div class="tab-item"><div class="icon">👤</div><span>我的</span></div></div>
+</div>
+
+<div class="page-title">
+  <h2>页面三：预约记录 (RecordsPage.ets)</h2>
+  <p>负责人：成员C</p>
+</div>
+<div class="phone-mockup">
+  <div class="screen-content" id="recordsPageContent">
+    <header class="records-header">我的预约</header>
+    <div class="record-tabs"><div class="record-tab active" onclick="switchRecordTab('reserved')">已预约</div><div class="record-tab" onclick="switchRecordTab('completed')">已参加</div><div class="record-tab" onclick="switchRecordTab('cancelled')">已取消</div><div class="record-tab" onclick="switchRecordTab('expired')">已过期</div></div>
+    <div id="reserved" class="record-list-container active"><div class="timeline"><div class="timeline-item"><div class="card record-card"><h4>HarmonyOS 技术分享会</h4><p>时间：今天 19:00</p><p>地点：教学楼 B201</p><div class="actions"><button class="secondary">取消预约</button><button class="primary">查看二维码</button></div></div></div><div class="timeline-item"><div class="card record-card"><h4>"编程之夜" Hackathon</h4><p>时间：6月1日 18:00</p><p>地点：大学生活动中心</p><div class="actions"><button class="secondary">取消预约</button><button class="primary">查看二维码</button></div></div></div></div></div>
+    <div id="completed" class="record-list-container"><div class="timeline"><div class="timeline-item state-completed"><div class="card record-card state-completed"><div class="status-badge">✓</div><h4>毕业季音乐节</h4><p>时间：5月20日 18:30</p><p>地点：学校大礼堂</p><div class="actions"><button class="primary">评价活动</button><button class="secondary">删除记录</button></div></div></div></div></div>
+    <div id="cancelled" class="record-list-container"><div class="timeline"><div class="timeline-item state-cancelled"><div class="card record-card state-cancelled"><div class="status-badge">✕</div><h4>英语角交流活动</h4><p>时间：5月18日 19:00</p><p>地点：外语楼咖啡厅</p><div class="actions"><button class="danger">删除记录</button></div></div></div></div></div>
+    <div id="expired" class="record-list-container"><div class="timeline"><div class="timeline-item state-expired"><div class="card record-card state-expired"><div class="status-badge">!</div><h4>春季校园招聘会</h4><p>时间：3月15日 09:00</p><p>地点：体育馆</p></div></div></div></div>
+  </div>
+  <div class="tab-bar"><div class="tab-item"><div class="icon">🏠</div><span>首页</span></div><div class="tab-item"><div class="icon">📝</div><span>活动</span></div><div class="tab-item active"><div class="icon">📋</div><span>记录</span></div><div class="tab-item"><div class="icon">👤</div><span>我的</span></div></div>
+</div>
+
+<div class="page-title">
+  <h2>页面四：个人中心 (ProfilePage.ets)</h2>
+  <p>负责人：成员D (已实现全部子页面)</p>
+</div>
+<div class="phone-mockup" id="profilePage">
+  <div class="screen-content" id="profileMainContent">
+    <div class="status-bar"><span>10:24</span><span>📶 🔋</span></div>
+    <div class="profile-header"><img src="https://images.unsplash.com/photo-1577202214328-c04b77cefb5d?w=128&h=128&fit=crop" alt="User Avatar"><div class="info"><h3>小明同学</h3><p>软件工程 2022级</p></div></div>
+    <div class="profile-stats"><div class="stat-card"><div class="value">12</div><div class="label">参与活动</div></div><div class="stat-card"><div class="value">860</div><div class="label">累计积分</div></div></div>
+    <div class="menu-list">
+      <div class="menu-item" onclick="showSubPage('profileEdit')"><div class="icon">👤</div><div class="text">个人资料编辑</div><div class="arrow">></div></div>
+      <div class="menu-item" onclick="showSubPage('notificationSettings')"><div class="icon">🔔</div><div class="text">消息通知设置</div><div class="arrow">></div></div>
+      <div class="menu-item" onclick="showSubPage('privacySettings')"><div class="icon">🛡️</div><div class="text">隐私设置</div><div class="arrow">></div></div>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item" onclick="showSubPage('helpAndFeedback')"><div class="icon">❓</div><div class="text">帮助与反馈</div><div class="arrow">></div></div>
+      <div class="menu-item" onclick="showSubPage('aboutUs')"><div class="icon">ℹ️</div><div class="text">关于我们</div><div class="arrow">></div></div>
+    </div>
+    <div class="logout-btn-container"><button class="btn btn-warning">退出登录</button></div>
+  </div>
+  <div class="tab-bar" id="profileTabBar"><div class="tab-item"><div class="icon">🏠</div><span>首页</span></div><div class="tab-item"><div class="icon">📝</div><span>活动</span></div><div class="tab-item"><div class="icon">📋</div><span>记录</span></div><div class="tab-item active"><div class="icon">👤</div><span>我的</span></div></div>
+
+  <div class="sub-page" id="profileEdit">
+    <header class="sub-page-header"><div class="back-btn" onclick="hideSubPage('profileEdit')">&lt;</div><div class="title">个人资料编辑</div></header>
+    <div class="sub-page-content">
+      <div class="avatar-uploader"><img src="https://images.unsplash.com/photo-1577202214328-c04b77cefb5d?w=128&h=128&fit=crop" alt="User Avatar"><button>更换头像</button></div>
+      <div class="menu-list"><div class="setting-item"><span class="label">昵称</span><div class="arrow">小明同学 ></div></div><div class="setting-item"><span class="label">学号</span><div class="text" style="color: var(--text-secondary);">2022010101</div></div><div class="setting-item"><span class="label">学院</span><div class="arrow">计算机学院 ></div></div></div>
+      <div class="btn-container"><button class="btn btn-primary">保存</button></div>
+    </div>
+  </div>
+
+  <div class="sub-page" id="notificationSettings">
+    <header class="sub-page-header"><div class="back-btn" onclick="hideSubPage('notificationSettings')">&lt;</div><div class="title">消息通知设置</div></header>
+    <div class="sub-page-content">
+      <div class="menu-list" style="margin-top: 24px;"><div class="setting-item"><span class="label">接收活动提醒</span><label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label></div><div class="setting-item"><span class="label">接收系统通知</span><label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label></div></div>
+      <div class="menu-list"><div class="setting-item"><span class="label">免打扰时段</span><div class="arrow">></div></div></div>
+    </div>
+  </div>
+
+  <div class="sub-page" id="privacySettings">
+    <header class="sub-page-header"><div class="back-btn" onclick="hideSubPage('privacySettings')">&lt;</div><div class="title">隐私设置</div></header>
+    <div class="sub-page-content">
+      <div class="menu-list" style="margin-top: 24px;"><div class="setting-item"><span class="label">公开我的个人主页</span><label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label></div><div class="setting-item"><span class="label">允许他人查看我的活动记录</span><label class="toggle-switch"><input type="checkbox"><span class="slider"></span></label></div></div>
+    </div>
+  </div>
+
+  <div class="sub-page" id="helpAndFeedback">
+    <header class="sub-page-header"><div class="back-btn" onclick="hideSubPage('helpAndFeedback')">&lt;</div><div class="title">帮助与反馈</div></header>
+    <div class="sub-page-content">
+      <h3 class="section-title" style="padding: 24px 16px 0; margin: 0;">常见问题</h3>
+      <div class="menu-list"><div class="accordion-item"><div class="accordion-header">如何预约活动？<div class="arrow">></div></div><div class="accordion-content"><p>在“活动”页面浏览或搜索活动，进入详情页后点击“立即预约”并填写信息即可。</p></div></div><div class="accordion-item"><div class="accordion-header">如何取消预约？<div class="arrow">></div></div><div class="accordion-content"><p>在“记录”页面的“已预约”列表中，找到对应活动，点击“取消预约”按钮即可。</p></div></div><div class="accordion-item"><div class="accordion-header">收不到通知怎么办？<div class="arrow">></div></div><div class="accordion-content"><p>请在“我的”->“消息通知设置”中检查是否开启了相关通知权限，并检查手机系统设置。</p></div></div></div>
+      <div class="btn-container"><button class="btn btn-secondary">意见反馈</button></div>
+    </div>
+  </div>
+
+  <div class="sub-page" id="aboutUs">
+    <header class="sub-page-header"><div class="back-btn" onclick="hideSubPage('aboutUs')">&lt;</div><div class="title">关于我们</div></header>
+    <div class="sub-page-content">
+      <div class="about-container"><div class="app-logo">校</div><h3>掌上校园</h3><div class="version-info">Version 1.0.0 (HarmonyOS)</div><p class="about-content">本项目旨在提供一个便捷、高效的校园活动统一管理平台，提升学生参与校园活动的体验。</p></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 记录页面 Tab 切换功能
+  function switchRecordTab(tabId) {
+    const container = document.getElementById('recordsPageContent');
+    container.querySelectorAll('.record-tab').forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+    container.querySelectorAll('.record-list-container').forEach(content => content.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+  }
+
+  // 个人中心子页面切换功能
+  const profilePage = document.getElementById('profilePage');
+  const profileMainContent = document.getElementById('profileMainContent');
+  const profileTabBar = document.getElementById('profileTabBar');
+
+  function showSubPage(pageId) {
+    const page = document.getElementById(pageId);
+    if (page) {
+      page.classList.add('active');
+      profileMainContent.style.display = 'none';
+      profileTabBar.style.display = 'none';
+    }
+  }
+
+  function hideSubPage(pageId) {
+    const page = document.getElementById(pageId);
+    if (page) {
+      page.classList.remove('active');
+      profileMainContent.style.display = 'flex';
+      profileTabBar.style.display = 'flex';
+    }
+  }
+
+  profileMainContent.style.display = 'flex';
+  profileMainContent.style.flexDirection = 'column';
+
+  // 折叠面板（Accordion）交互功能
+  const accordions = document.querySelectorAll('.accordion-header');
+  accordions.forEach(accordion => {
+    accordion.addEventListener('click', () => {
+      accordion.classList.toggle('active');
+      const content = accordion.nextElementSibling;
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  });
+</script>
+</body>
+</html>

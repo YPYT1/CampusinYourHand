@@ -1,0 +1,11 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/ProfilePage_luojiaxin/MePage",
+    "pages/ProfilePage",
+    "pages/MessagePage",
+    "pages/PrivacyPage",
+    "pages/HelpPage",
+    "pages/AboutPage"
+  ]
+}
