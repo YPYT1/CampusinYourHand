@@ -11,8 +11,8 @@ export struct MapPage {
   aboutToAppear() {
     const params = router.getParams()
     if (params) {
-      this.latitude = params['latitude'] as number || 0
-      this.longitude = params['longitude'] as number || 0
+      this.latitude = (params as any).latitude as number || 0
+      this.longitude = (params as any).longitude as number || 0
       this.currentLocation = `纬度: ${this.latitude.toFixed(6)}, 经度: ${this.longitude.toFixed(6)}`
     }
   }

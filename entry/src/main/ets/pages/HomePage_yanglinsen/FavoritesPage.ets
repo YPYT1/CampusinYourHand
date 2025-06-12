@@ -17,8 +17,8 @@ export struct FavoritesPage {
 
   aboutToAppear() {
     const params = router.getParams()
-    if (params && params['favorites']) {
-      this.favorites = params['favorites'] as Activity[]
+    if (params && (params as any).favorites) {
+      this.favorites = (params as any).favorites as Activity[]
     }
   }
 

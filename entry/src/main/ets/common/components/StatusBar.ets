@@ -7,8 +7,8 @@ export struct StatusBar {
 
   aboutToAppear() {
     // 从global获取状态栏高度，如果没有则使用默认值
-    if (globalThis.AppStorage && globalThis.AppStorage['statusBarHeight']) {
-      this.barHeight = globalThis.AppStorage['statusBarHeight'];
+    if ((globalThis as any).statusBarHeight) {
+      this.barHeight = (globalThis as any).statusBarHeight;
     } else {
       this.barHeight = 44; // 默认状态栏高度
     }

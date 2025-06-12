@@ -35,12 +35,11 @@ export default class EntryAbility extends UIAbility {
       data.setWindowSystemBarProperties(properties);
       data.setWindowLayoutFullScreen(true);
 
-      // 获取状态栏高度并存入AppStorage
+      // 获取状态栏高度并存入全局变量
       try {
         let avoidArea = data.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM);
-        // 使用AppStorage.setOrCreate替代AppStorage.SetOrCreate
-        globalThis.AppStorage = globalThis.AppStorage || {};
-        globalThis.AppStorage['statusBarHeight'] = avoidArea.topRect.height;
+        // 使用简单的全局变量存储状态栏高度
+        (globalThis as any).statusBarHeight = avoidArea.topRect.height;
       } catch (err) {
         hilog.error(DOMAIN, 'testTag', 'Failed to get window avoid area. Cause: %{public}s', JSON.stringify(err) ?? '');
       }

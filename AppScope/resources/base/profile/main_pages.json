@@ -1,11 +1,16 @@
 {
   "src": [
     "pages/Index",
+    "pages/HomePage_yanglinsen/HomePage",
+    "pages/HomePage_yanglinsen/MapPage",
+    "pages/HomePage_yanglinsen/FavoritesPage",
+    "pages/ActivityPage_wuguixing/ActivityPage",
+    "pages/RecordsPage_yangyang/RecordsPage",
+    "pages/ProfilePage_luojiaxin/ProfilePage",
     "pages/ProfilePage_luojiaxin/MePage",
-    "pages/ProfilePage",
-    "pages/MessagePage",
-    "pages/PrivacyPage",
-    "pages/HelpPage",
-    "pages/AboutPage"
+    "pages/ProfilePage_luojiaxin/PrivacyPage",
+    "pages/ProfilePage_luojiaxin/MessagePage",
+    "pages/ProfilePage_luojiaxin/HelpPage",
+    "pages/ProfilePage_luojiaxin/AboutPage"
   ]
 }
