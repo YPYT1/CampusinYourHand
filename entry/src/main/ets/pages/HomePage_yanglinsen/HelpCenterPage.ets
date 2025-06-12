@@ -6,7 +6,6 @@ interface HelpItem {
   icon: string
 }
 
-@Entry
 @Component
 export struct HelpCenterPage {
   private helpItems: HelpItem[] = [

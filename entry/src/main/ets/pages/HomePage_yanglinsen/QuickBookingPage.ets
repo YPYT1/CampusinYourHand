@@ -1,7 +1,6 @@
 import router from '@ohos.router'
 import prompt from '@ohos.prompt'
 
-@Entry
 @Component
 export struct QuickBookingPage {
   @State selectedDate: string = '2024-01-15'
@@ -48,31 +47,31 @@ export struct QuickBookingPage {
             Grid() {
               GridItem() {
                 this.ServiceCard('学术报告厅', '🎭', this.selectedService === '学术报告厅')
-                  .onClick(() => {
-                    this.selectedService = '学术报告厅'
-                  })
               }
+              .onClick(() => {
+                this.selectedService = '学术报告厅'
+              })
               
               GridItem() {
                 this.ServiceCard('会议室', '💼', this.selectedService === '会议室')
-                  .onClick(() => {
-                    this.selectedService = '会议室'
-                  })
               }
+              .onClick(() => {
+                this.selectedService = '会议室'
+              })
               
               GridItem() {
                 this.ServiceCard('实验室', '🔬', this.selectedService === '实验室')
-                  .onClick(() => {
-                    this.selectedService = '实验室'
-                  })
               }
+              .onClick(() => {
+                this.selectedService = '实验室'
+              })
               
               GridItem() {
                 this.ServiceCard('体育场馆', '⚽', this.selectedService === '体育场馆')
-                  .onClick(() => {
-                    this.selectedService = '体育场馆'
-                  })
               }
+              .onClick(() => {
+                this.selectedService = '体育场馆'
+              })
             }
             .columnsTemplate('1fr 1fr')
             .rowsTemplate('1fr 1fr')

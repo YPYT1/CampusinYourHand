@@ -44,7 +44,7 @@ export struct HomePage {
       title: 'HarmonyOS 技术分享会',
       time: '今天 19:00 - 21:00',
       location: '教学楼 B201',
-      image: $r('app.media.img'),
+      image: $r('app.media.start'),
       status: '火热报名中'
     },
     {
@@ -52,7 +52,7 @@ export struct HomePage {
       title: '校园摄影大赛作品展',
       time: '周三至周五 全天',
       location: '图书馆一楼大厅',
-      image: $r('app.media.img'),
+      image: $r('app.media.activity'),
       status: '已结束'
     },
     {
@@ -60,7 +60,7 @@ export struct HomePage {
       title: '王者荣耀比赛',
       time: '周六至周天 全天',
       location: '电竞一楼大厅',
-      image: $r('app.media.img'),
+      image: $r('app.media.good'),
       status: '火热报名中'
     },
     {
@@ -68,7 +68,7 @@ export struct HomePage {
       title: '校园摇滚音乐节',
       time: '下周五 19:30',
       location: '学校操场',
-      image: $r('app.media.img'),
+      image: $r('app.media.speaker'),
       status: '火热报名中'
     }
   ]
@@ -371,7 +371,9 @@ export struct HomePage {
           .alignItems(HorizontalAlign.Center)
           .onClick(() => {
             router.pushUrl({
-              url: 'pages/HomePage_yanglinsen/QuickBookingPage'
+              url: 'pages/HomePage_yanglinsen/QuickBookingPageEntry'
+            }).catch((error: Error) => {
+              console.error('路由跳转失败:', error.message)
             })
           })
         }
@@ -455,7 +457,9 @@ export struct HomePage {
           .alignItems(HorizontalAlign.Center)
           .onClick(() => {
             router.pushUrl({
-              url: 'pages/HomePage_yanglinsen/HelpCenterPage'
+              url: 'pages/HomePage_yanglinsen/HelpCenterPageEntry'
+            }).catch((error: Error) => {
+              console.error('路由跳转失败:', error.message)
             })
           })
         }

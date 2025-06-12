@@ -4,6 +4,8 @@
     "pages/HomePage_yanglinsen/HomePage",
     "pages/HomePage_yanglinsen/MapPage",
     "pages/HomePage_yanglinsen/FavoritesPage",
+    "pages/HomePage_yanglinsen/QuickBookingPageEntry",
+    "pages/HomePage_yanglinsen/HelpCenterPageEntry",
     "pages/ActivityPage_wuguixing/ActivityPage",
     "pages/RecordsPage_yangyang/RecordsPage",
     "pages/ProfilePage_luojiaxin/ProfilePage",
