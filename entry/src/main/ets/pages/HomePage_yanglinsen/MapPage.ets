@@ -1,6 +1,11 @@
 import router from '@ohos.router'
 import prompt from '@ohos.prompt'
 
+interface RouterParams {
+  latitude?: number
+  longitude?: number
+}
+
 @Entry
 @Component
 export struct MapPage {
@@ -11,8 +16,8 @@ export struct MapPage {
   aboutToAppear() {
     const params = router.getParams()
     if (params) {
-      this.latitude = (params as any).latitude as number || 0
-      this.longitude = (params as any).longitude as number || 0
+      this.latitude = (params as RouterParams).latitude || 0
+      this.longitude = (params as RouterParams).longitude || 0
       this.currentLocation = `纬度: ${this.latitude.toFixed(6)}, 经度: ${this.longitude.toFixed(6)}`
     }
   }

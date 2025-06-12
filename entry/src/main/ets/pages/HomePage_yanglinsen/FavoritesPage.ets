@@ -10,6 +10,10 @@ interface Activity {
   status: string
 }
 
+interface RouterParams {
+  favorites?: Activity[]
+}
+
 @Entry
 @Component
 export struct FavoritesPage {
@@ -17,8 +21,8 @@ export struct FavoritesPage {
 
   aboutToAppear() {
     const params = router.getParams()
-    if (params && (params as any).favorites) {
-      this.favorites = (params as any).favorites as Activity[]
+    if (params && (params as RouterParams).favorites) {
+      this.favorites = (params as RouterParams).favorites as Activity[]
     }
   }
 

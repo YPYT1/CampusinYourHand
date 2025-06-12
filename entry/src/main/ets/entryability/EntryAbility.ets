@@ -4,6 +4,10 @@ import { window } from '@kit.ArkUI';
 
 const DOMAIN = 0x0000;
 
+interface GlobalStorage {
+  statusBarHeight?: number;
+}
+
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
@@ -39,7 +43,7 @@ export default class EntryAbility extends UIAbility {
       try {
         let avoidArea = data.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM);
         // 使用简单的全局变量存储状态栏高度
-        (globalThis as any).statusBarHeight = avoidArea.topRect.height;
+        (globalThis as GlobalStorage).statusBarHeight = avoidArea.topRect.height;
       } catch (err) {
         hilog.error(DOMAIN, 'testTag', 'Failed to get window avoid area. Cause: %{public}s', JSON.stringify(err) ?? '');
       }

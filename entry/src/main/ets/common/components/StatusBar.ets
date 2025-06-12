@@ -1,5 +1,9 @@
 import { AppColors, AppSizes } from '../constants/AppConstants'
 
+interface GlobalStorage {
+  statusBarHeight?: number;
+}
+
 @Component
 export struct StatusBar {
   @State currentTime: string = '10:24'
@@ -7,8 +11,9 @@ export struct StatusBar {
 
   aboutToAppear() {
     // 从global获取状态栏高度，如果没有则使用默认值
-    if ((globalThis as any).statusBarHeight) {
-      this.barHeight = (globalThis as any).statusBarHeight;
+    const height = (globalThis as GlobalStorage).statusBarHeight;
+    if (height) {
+      this.barHeight = height;
     } else {
       this.barHeight = 44; // 默认状态栏高度
     }
