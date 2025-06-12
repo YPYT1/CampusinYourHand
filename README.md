@@ -58,13 +58,13 @@ entry/src/main/ets/
 ## 🚀 快速上手
 
 ### 环境要求
-- **DevEco Studio**: 推荐使用最新版本
+- **DevEco Studio**: `5.0.5` (请注意，项目基于此版本开发，可能无法向下兼容)
 - **SDK**: HarmonyOS NEXT (API 10+)
 
 ### 安装与运行
 1. **克隆项目到本地**:
    ```bash
-   git clone https://github.com/your-username/your-repository-name.git
+   git clone https://github.com/YPYT1/CampusinYourHand.git
    ```
 2. **打开项目**:
    - 启动 DevEco Studio。
