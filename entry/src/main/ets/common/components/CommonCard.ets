@@ -39,4 +39,4 @@ export struct CommonCard {
       offsetY: 2
     })
   }
-}
+} 

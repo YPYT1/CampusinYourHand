@@ -15,7 +15,7 @@ interface Activity {
 export struct FavoritesPage {
   @State favoriteActivities: Activity[] = []
   private storageKey = 'favorite_activities'
-
+  
   aboutToAppear() {
     this.loadFavorites()
   }
@@ -167,13 +167,13 @@ export struct FavoritesPage {
                   .margin({ bottom: 8 })
 
                   Row() {
-                    Text(item.status)
-                      .fontSize(12)
-                      .fontWeight(FontWeight.Medium)
-                      .fontColor(item.status === '火热报名中' ? '#34C759' : '#8E8E93')
-                      .backgroundColor(item.status === '火热报名中' ? '#EAF7ED' : '#F2F2F7')
-                      .borderRadius(16)
-                      .padding({ left: 10, right: 10, top: 4, bottom: 4 })
+                  Text(item.status)
+                    .fontSize(12)
+                    .fontWeight(FontWeight.Medium)
+                    .fontColor(item.status === '火热报名中' ? '#34C759' : '#8E8E93')
+                    .backgroundColor(item.status === '火热报名中' ? '#EAF7ED' : '#F2F2F7')
+                    .borderRadius(16)
+                    .padding({ left: 10, right: 10, top: 4, bottom: 4 })
 
                     Blank()
 
@@ -215,8 +215,8 @@ export struct FavoritesPage {
                   }
                 })
               })
-            })
-          }
+          })
+        }
           .padding({ bottom: 20 })
         }
         .layoutWeight(1)

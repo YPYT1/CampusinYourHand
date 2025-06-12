@@ -21,7 +21,7 @@ export struct StatusBar {
   build() {
     // 只保留高度占位，不显示任何内容
     Row()
-      .width('100%')
+    .width('100%')
       .height(this.barHeight)
       .backgroundColor('transparent')
   }

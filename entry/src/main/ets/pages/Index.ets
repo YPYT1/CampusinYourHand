@@ -97,7 +97,7 @@ struct Index {
 
   @Builder IconBuilder(iconType: IconType, isActive: boolean) {
     Text(this.getIcon(iconType))
-      .fontSize(24)
-      .fontColor(isActive ? '#007AFF' : '#8E8E93')
+        .fontSize(24)
+        .fontColor(isActive ? '#007AFF' : '#8E8E93')
   }
 }

@@ -1,153 +1,116 @@
-# 掌上校园活动预约 HarmonyOS App 项目
+# HarmonyOS 掌上校园活动预约系统
 
-## 📱 项目概述
+[![HarmonyOS](https://img.shields.io/badge/HarmonyOS-NEXT-blue.svg)](https://developer.harmonyos.com)
+[![ArkTS](https://img.shields.io/badge/Language-ArkTS-green.svg)](https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ts-based-syntax-0000001127164115)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-这是一个基于 HarmonyOS 开发的校园活动预约应用，采用模块化开发方式，支持多人协作开发。
+## 📖 项目简介
+
+**掌上校园** 是一款专为高校学生设计的活动预约App，基于最新的 **HarmonyOS NEXT** 平台，并采用 **ArkTS** 语言和 **ArkUI** 声明式UI框架进行开发。
+
+本应用旨在为学生提供一个便捷的校园活动信息聚合与报名平台，通过现代化的UI设计和流畅的用户体验，简化活动发现、报名和管理流程。项目采用模块化架构，职责清晰，具有良好的可维护性和扩展性。
+
+## ✨ 主要功能
+
+- **丰富首页**：聚合展示最新的热门活动，提供活动搜索和分类快捷入口。
+- **活动预约**：查看活动详细信息，填写并提交预约表单，完成在线报名。
+- **记录管理**：以时间轴形式清晰展示用户的预约记录，并按状态（已预约、已参加、已取消）分类。
+- **个人中心**：管理个人资料、查看参与活动统计、进行应用设置。
+- **沉浸式体验**：无边框的UI设计，提供优异的视觉和交互体验。
+
+## 📸 应用截图
+
+| 首页 | 活动预约 |
+| :---: | :---: |
+| *在此处添加截图* | *在此处添加截图* |
+| **预约记录** | **个人中心** |
+| *在此处添加截图* | *在此处添加截图* |
+
+## 🛠️ 技术栈
+
+- **开发平台**: HarmonyOS NEXT
+- **开发语言**: ArkTS
+- **UI框架**: ArkUI (声明式开发范式)
+- **状态管理**: @State, @Prop, @Link, AppStorage
+- **项目架构**: 分层模块化架构
+- **开发工具**: DevEco Studio
 
 ## 🏗️ 项目结构
+
+项目采用模块化开发，结构清晰，便于团队协作和后期维护。
 
 ```
 entry/src/main/ets/
 ├── pages/                    # 页面文件
 │   ├── Index.ets            # 主框架页面（底部导航 + 路由管理）✅ 已完成
-│   ├── HomePage.ets         # 首页模块（负责人：杨林森）🚧 待开发
-│   ├── ActivityPage.ets     # 活动预约模块（负责人：吴贵兴）🚧 待开发
-│   ├── RecordsPage.ets      # 预约记录模块（负责人：杨洋）🚧 待开发
-│   └── ProfilePage.ets      # 个人中心模块（负责人：罗嘉欣）🚧 待开发
+│   ├── HomePage.ets         # 首页模块 ✅ 已完成
+│   ├── ActivityPage.ets     # 活动预约模块 ✅ 已完成
+│   ├── RecordsPage.ets      # 预约记录模块 ✅ 已完成
+│   └── ProfilePage.ets      # 个人中心模块 ✅ 已完成
 ├── common/                  # 公共资源
 │   ├── components/          # 公共组件库
-│   │   ├── CommonCard.ets   # 通用卡片组件 ✅
-│   │   └── CommonButton.ets # 通用按钮组件 ✅
 │   ├── constants/           # 常量定义
-│   │   └── AppConstants.ets # 应用常量（颜色、尺寸等）✅
-│   └── utils/              # 工具函数
-│       └── CommonUtils.ets  # 通用工具函数 ✅
+│   └── utils/               # 工具函数
 └── model/                   # 数据模型
-    └── DataModels.ets       # 数据结构定义 ✅
+    └── DataModels.ets       # 数据结构定义
 ```
 
-## 🎨 设计规范
+## 🚀 快速上手
 
-### 颜色规范
+### 环境要求
+- **DevEco Studio**: 推荐使用最新版本
+- **SDK**: HarmonyOS NEXT (API 10+)
+
+### 安装与运行
+1. **克隆项目到本地**:
+   ```bash
+   git clone https://github.com/your-username/your-repository-name.git
+   ```
+2. **打开项目**:
+   - 启动 DevEco Studio。
+   - 选择 `File > Open`，然后选择克隆下来的项目文件夹。
+3. **运行项目**:
+   - 等待项目同步和构建完成。
+   - 连接真机或启动模拟器。
+   - 点击 `Run > Run 'entry'` 即可在设备上运行本应用。
+
+## 📋 开发规范
+
+为保证代码质量和项目可维护性，开发过程遵循以下规范：
+
+### 设计规范
 - **主色调**: `#007AFF` (HarmonyOS蓝)
 - **成功色**: `#34C759` (绿色)
 - **警告色**: `#FF3B30` (红色)
 - **背景色**: `#F2F2F7` (浅灰)
-- **卡片背景**: `#FFFFFF` (白色)
-- **主要文字**: `#1C1C1E` (深色)
-- **次要文字**: `#8E8E93` (灰色)
-
-### 尺寸规范
 - **圆角**: 卡片12px, 按钮8px
 - **间距**: 8px, 16px, 24px, 32px
 - **字体**: 10px(小), 14px(常规), 16px(中), 18px(大), 24px(标题)
 
-## 👥 团队分工
+### 编码规范
+- **命名规范**: 遵循ArkTS官方推荐的命名约定，使用有意义的变量和函数名。
+- **注释标准**: 对核心业务逻辑和复杂组件添加必要的注释。
+- **代码结构**: 保持模块化和组件化，高内聚、低耦合。
+- **公共资源**: 优先使用 `common` 目录下的公共组件、常量和工具函数，避免重复造轮子。
 
-| 成员 | 负责模块 | 文件名 | 核心功能 |
-|------|----------|---------|----------|
-| **杨林森** | 首页模块 | `HomePage.ets` | 活动展示、搜索、快捷入口 |
-| **吴贵兴** | 活动预约 | `ActivityPage.ets` | 活动详情、预约表单、确认流程 |
-| **杨洋** | 预约记录 | `RecordsPage.ets` | 记录管理、状态更新、二维码 |
-| **罗嘉欣** | 个人中心 | `ProfilePage.ets` | 用户资料、设置、统计信息 |
+## 🤝 贡献指南
 
-## 🚀 快速开始
+我们欢迎所有形式的贡献，无论是报告问题、提交代码还是提出改进建议。
 
-### 1. 当前项目状态
-- ✅ 主框架已完成（底部导航栏 + 页面路由）
-- ✅ 公共组件库已建立
-- ✅ 设计规范已统一
-- ✅ 数据模型已定义
-- 🚧 4个页面模块等待各成员开发
+1. **Fork 本仓库**
+2. **创建您的特性分支**: `git checkout -b feature/AmazingFeature`
+3. **提交您的更改**: `git commit -m 'Add some AmazingFeature'`
+4. **推送到分支**: `git push origin feature/AmazingFeature`
+5. **创建 Pull Request**
 
-### 2. 开发流程
-1. **各成员克隆项目**到本地
-2. **只修改自己负责的页面文件**（如 `HomePage.ets`）
-3. **使用公共组件和常量**，保持界面一致性
-4. **提交代码前测试**页面功能和跳转
-5. **合并代码**，完成最终项目
+## 📄 许可证
 
-### 3. 使用公共组件示例
+本项目采用 [MIT License](LICENSE) 许可证。
 
-```typescript
-import { CommonCard } from '../common/components/CommonCard'
-import { CommonButton, ButtonType } from '../common/components/CommonButton'
-import { AppColors, AppSizes } from '../common/constants/AppConstants'
+## 🙏 致谢
 
-// 使用通用卡片
-CommonCard({ title: '活动信息' }) {
-  Text('活动内容')
-    .fontSize(AppSizes.FONT_BASE)
-    .fontColor(AppColors.TEXT_PRIMARY)
-}
-
-// 使用通用按钮
-CommonButton({
-  text: '确认预约',
-  type: ButtonType.PRIMARY,
-  onClickCallback: () => {
-    // 点击处理逻辑
-  }
-})
-```
-
-## 📋 开发指南
-
-### 页面开发要点
-
-#### HomePage.ets（杨林森）
-- 实现渐变色头部背景
-- 添加搜索框和快捷入口网格
-- 显示热门活动卡片列表
-- 处理活动点击跳转到详情页
-
-#### ActivityPage.ets（吴贵兴）
-- 显示活动详情信息
-- 实现预约表单（姓名、学号、联系方式）
-- 添加表单验证逻辑
-- 处理预约提交确认
-
-#### RecordsPage.ets（杨洋）
-- 实现Tab切换（已预约、已参加、已取消、过期）
-- 显示时间轴样式的记录列表
-- 添加操作按钮（取消预约、查看二维码）
-- 处理状态更新逻辑
-
-#### ProfilePage.ets（罗嘉欣）
-- 显示用户信息头部
-- 实现统计数据展示
-- 添加设置菜单列表
-- 支持子页面跳转和返回
-
-### 注意事项
-1. **只修改自己的页面文件**，不要改动其他文件
-2. **使用已定义的常量**，保持设计一致性
-3. **参考原型图设计**，确保界面效果
-4. **添加必要的注释**，便于代码维护
-5. **测试页面功能**，确保无错误
-
-## 🔧 技术要点
-
-### 底部导航实现
-- 使用 `Tabs` 组件实现页面切换
-- 自定义 `TabBar` 样式匹配设计稿
-- SVG图标支持状态变色
-- 页面切换动画效果
-
-### 状态管理
-- 使用 `@State` 管理页面状态
-- 使用 `@Prop` 传递组件属性
-- 合理使用 `@Builder` 构建复用组件
-
-### 样式规范
-- 统一使用 `AppColors` 和 `AppSizes` 常量
-- 保持组件样式一致性
-- 响应式布局适配不同屏幕
-
-## 📞 联系方式
-
-如有开发问题，请及时沟通交流，确保项目进度和质量。
+感谢每一位为项目做出贡献的开发者，也感谢开源社区提供的优秀资源。
 
 ---
 
-**祝开发顺利！🎉** 
+**祝您使用愉快！🎉** 
