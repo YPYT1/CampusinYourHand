@@ -45,7 +45,7 @@ export struct MapPage {
             router.back()
           })
         
-        Text('扫码签到')
+        Text('定位签到')
           .fontSize(18)
           .fontWeight(FontWeight.Bold)
           .margin({ left: 16 })

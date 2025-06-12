@@ -6,7 +6,6 @@ interface GlobalStorage {
 
 @Component
 export struct StatusBar {
-  @State currentTime: string = '10:24'
   @State barHeight: number = 44
 
   aboutToAppear() {
@@ -20,26 +19,10 @@ export struct StatusBar {
   }
 
   build() {
-    Row() {
-      Text(this.currentTime)
-        .fontSize(AppSizes.FONT_BASE)
-        .fontWeight(FontWeight.Medium)
-        .fontColor(AppColors.TEXT_PRIMARY)
-      
-      Blank()
-      
-      Row() {
-        Text('📶')
-          .fontSize(AppSizes.ICON_XS)
-          .fontColor(AppColors.TEXT_PRIMARY)
-        Text('🔋')
-          .fontSize(AppSizes.ICON_XS)
-          .fontColor(AppColors.TEXT_PRIMARY)
-      }
-    }
-    .width('100%')
-    .height(this.barHeight)
-    .padding({ left: AppSizes.SPACING_LG, right: AppSizes.SPACING_LG })
-    .backgroundColor('transparent')
+    // 只保留高度占位，不显示任何内容
+    Row()
+      .width('100%')
+      .height(this.barHeight)
+      .backgroundColor('transparent')
   }
 } 

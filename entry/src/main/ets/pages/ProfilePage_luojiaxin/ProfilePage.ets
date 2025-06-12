@@ -155,7 +155,7 @@ export struct ProfilePage {
               .height("33%")
               .onClick(()=>{
                 router.pushUrl({
-                  url:'pages/MessagePage'
+                  url:'pages/ProfilePage_luojiaxin/MessagePage'
                 })
               })
 
@@ -169,7 +169,7 @@ export struct ProfilePage {
               .height("33%")
               .onClick(()=> {
                 router.pushUrl({
-                  url: 'pages/PrivacyPage'
+                  url: 'pages/ProfilePage_luojiaxin/PrivacyPage'
                 })
               })
             }
@@ -196,7 +196,7 @@ export struct ProfilePage {
               }.height("50%")
               .onClick(()=> {
                 router.pushUrl({
-                  url: 'pages/HelpPage'
+                  url: 'pages/ProfilePage_luojiaxin/HelpPage'
                 })
               })
 
@@ -210,7 +210,7 @@ export struct ProfilePage {
               }.height("50%")
               .onClick(()=> {
                 router.pushUrl({
-                  url: 'pages/AboutPage'
+                  url: 'pages/ProfilePage_luojiaxin/AboutPage'
                 })
               })
 

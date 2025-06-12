@@ -327,24 +327,7 @@ export struct HomePage {
         // 状态栏占位
         StatusBar()
 
-        // 时间和问候
-        Row() {
-          Text('10:24')
-            .fontSize(16)
-            .fontWeight(FontWeight.Medium)
-            .fontColor(Color.White)
-          Blank()
-          Row({ space: 8 }) {
-            Image($r("app.media.souc"))
-              .width(16)
-              .height(16)
-            Image($r("app.media.speaker"))
-              .width(16)
-              .height(16)
-          }
-        }
-        .width('100%')
-        .padding({ top: 5, bottom: 5 })
+
 
         // 用户信息
         Row() {
@@ -420,7 +403,7 @@ export struct HomePage {
           }
 
           GridItem() {
-            this.QuickEntryBuilder('扫码签到', $r('app.media.ic_scan_checkin'), AppColors.ENTRY_GREEN, () => {
+            this.QuickEntryBuilder('定位签到', $r('app.media.ic_location_checkin'), AppColors.ENTRY_GREEN, () => {
               this.handleCheckIn()
             })
           }
@@ -457,24 +440,6 @@ export struct HomePage {
           bottom: AppSizes.SPACING_LG
         })
         .margin({ top: 16 })
-
-        // 热门活动标题
-        Row() {
-          Text('热门活动')
-            .fontSize(18)
-            .fontWeight(FontWeight.Bold)
-          Text('查看全部 >')
-            .fontSize(14)
-            .fontColor('#8E8E93')
-            .onClick(() => {
-              router.pushUrl({
-                url: 'pages/ActivityPage_wuguixing/ActivityPage'
-              })
-            })
-        }
-        .width('100%')
-        .justifyContent(FlexAlign.SpaceBetween)
-        .padding({ left: AppSizes.SPACING_LG, right: AppSizes.SPACING_LG, top: 16 })
       }
       .width('100%')
       .padding({ top: 16, left: 16, right: 16, bottom: 0 })
@@ -499,6 +464,29 @@ export struct HomePage {
         .position({ x: 0, y: 180 })
         .zIndex(7)
       }
+
+      // 热门活动标题
+      Row() {
+        Text('热门活动')
+          .fontSize(18)
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#333333')
+        Blank()
+        Text('查看全部 >')
+          .fontSize(14)
+          .fontColor('#007AFF')
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/ActivityPage_wuguixing/ActivityPage'
+            })
+          })
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.SpaceBetween)
+      .padding({ left: AppSizes.SPACING_LG, right: AppSizes.SPACING_LG, top: 16, bottom: 8 })
+      .position({ x: 0, y: 350 })
+      .zIndex(2)
+      .backgroundColor(Color.White)
 
       // 可滚动的活动卡片
       Scroll() {

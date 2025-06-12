@@ -13,11 +13,15 @@ export struct ActivityPage {
       Column() {
         // 顶部活动封面和标题
         Stack({ alignContent: Alignment.Bottom }) {
-          Image('https://img.zcool.cn/community/01a0bc5c8409daa801208f8b3c3db9.jpg')
+          // 使用蓝色渐变背景替代图片
+          Row()
             .width('100%')
             .height(200)
             .borderRadius({ topLeft: 16, topRight: 16 })
-            .objectFit(ImageFit.Cover)
+            .linearGradient({
+              angle: 135,
+              colors: [['#007AFF', 0.0], ['#00C6FF', 1.0]]
+            })
           
           Column() {
             Text('HarmonyOS 技术分享会')
