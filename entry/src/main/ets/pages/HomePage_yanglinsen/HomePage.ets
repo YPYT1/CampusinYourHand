@@ -13,6 +13,12 @@ interface Activity {
   status: string
 }
 
+interface TabItem {
+  icon: string
+  text: string
+  isActive: boolean
+}
+
 @Entry
 @Component
 export struct HomePage {
@@ -27,6 +33,9 @@ export struct HomePage {
   @State isSearching: boolean = false
   @State favoriteStates: Map<string, boolean> = new Map()
   @State favoriteActivities: Activity[] = []
+  
+  // 持久化收藏数据
+  private storageKey = 'favorite_activities'
 
   // 模拟活动数据
   private activities: Activity[] = [
@@ -66,6 +75,51 @@ export struct HomePage {
 
   aboutToAppear() {
     this.getCurrentLocation()
+    this.loadFavorites()
+  }
+
+  // 加载收藏数据
+  loadFavorites() {
+    try {
+      const storedFavorites = AppStorage.get<Activity[]>(this.storageKey)
+      if (storedFavorites && Array.isArray(storedFavorites)) {
+        this.favoriteActivities = storedFavorites
+        // 重建收藏状态Map
+        this.favoriteStates.clear()
+        this.favoriteActivities.forEach(activity => {
+          this.favoriteStates.set(activity.id, true)
+        })
+      }
+    } catch (error) {
+      console.error('加载收藏数据失败:', JSON.stringify(error))
+    }
+  }
+
+  // 保存收藏数据
+  saveFavorites() {
+    try {
+      AppStorage.setOrCreate<Activity[]>(this.storageKey, this.favoriteActivities)
+    } catch (error) {
+      console.error('保存收藏数据失败:', JSON.stringify(error))
+    }
+  }
+
+  // 切换收藏状态
+  toggleFavorite(activity: Activity) {
+    const isCurrentlyFavorited = this.favoriteStates.get(activity.id) || false
+    
+    if (isCurrentlyFavorited) {
+      // 取消收藏
+      this.favoriteStates.set(activity.id, false)
+      this.favoriteActivities = this.favoriteActivities.filter(item => item.id !== activity.id)
+    } else {
+      // 添加收藏
+      this.favoriteStates.set(activity.id, true)
+      this.favoriteActivities.push(activity)
+    }
+    
+    // 保存到本地存储
+    this.saveFavorites()
   }
 
   async getCurrentLocation() {
@@ -262,12 +316,7 @@ export struct HomePage {
                 .margin({ left: 96, top: 8 })
                 .position({ x: 96 })
                 .onClick(() => {
-                  this.favoriteStates.set(item.id, !this.favoriteStates.get(item.id))
-                  if (this.favoriteStates.get(item.id)) {
-                    this.favoriteActivities.push(item)
-                  } else {
-                    this.favoriteActivities = this.favoriteActivities.filter(activity => activity.id !== item.id)
-                  }
+                  this.toggleFavorite(item)
                 })
             }
           }
@@ -294,76 +343,262 @@ export struct HomePage {
   }
 
   @Builder
-  QuickEntryBuilder(title: string, icon: Resource, color: string, onTap: () => void) {
+  NormalContentBuilder() {
     Column() {
-      Column() {
-        Image(icon)
-          .width(28)
-          .height(28)
-          .fillColor(Color.White)
-      }
-      .width(50)
-      .height(50)
-      .borderRadius(AppSizes.RADIUS_LG)
-      .backgroundColor(color)
-      .justifyContent(FlexAlign.Center)
+      // Quick Entry Grid
+      Grid() {
+        GridItem() {
+          Column() {
+            Column() {
+              Text('📝')
+                .fontSize(AppSizes.ICON_BASE)
+                .fontColor(AppColors.TEXT_WHITE)
+            }
+            .width(50)
+            .height(50)
+            .borderRadius(AppSizes.RADIUS_LG)
+            .backgroundColor(AppColors.ENTRY_ORANGE)
+            .justifyContent(FlexAlign.Center)
 
-      Text(title)
-        .fontSize(AppSizes.FONT_SM + 1)
-        .fontWeight(FontWeight.Medium)
-        .margin({ top: AppSizes.SPACING_SM })
+            Text('快捷预约')
+              .fontSize(AppSizes.FONT_SM + 1)
+              .fontWeight(FontWeight.Medium)
+              .margin({ top: AppSizes.SPACING_SM })
+          }
+          .width('100%')
+          .height('100%')
+          .justifyContent(FlexAlign.Center)
+          .alignItems(HorizontalAlign.Center)
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/HomePage_yanglinsen/QuickBookingPage'
+            })
+          })
+        }
+
+        GridItem() {
+          Column() {
+            Column() {
+              Text('\u{1F4CD}') // 📍
+                .fontSize(AppSizes.ICON_BASE)
+                .fontColor(AppColors.TEXT_WHITE)
+            }
+            .width(50)
+            .height(50)
+            .borderRadius(AppSizes.RADIUS_LG)
+            .backgroundColor(AppColors.ENTRY_GREEN)
+            .justifyContent(FlexAlign.Center)
+            Text('定位签到')
+              .fontSize(AppSizes.FONT_SM + 1)
+              .fontWeight(FontWeight.Medium)
+              .margin({ top: AppSizes.SPACING_SM })
+          }
+          .width('100%')
+          .height('100%')
+          .justifyContent(FlexAlign.Center)
+          .alignItems(HorizontalAlign.Center)
+          .onClick(() => {
+            this.handleCheckIn()
+          })
+        }
+
+        GridItem() {
+          Column() {
+            Column() {
+              Text('⭐')
+                .fontSize(AppSizes.ICON_BASE)
+                .fontColor(AppColors.TEXT_WHITE)
+            }
+            .width(50)
+            .height(50)
+            .borderRadius(AppSizes.RADIUS_LG)
+            .backgroundColor(AppColors.ENTRY_BLUE)
+            .justifyContent(FlexAlign.Center)
+
+            Text('我的收藏')
+              .fontSize(AppSizes.FONT_SM + 1)
+              .fontWeight(FontWeight.Medium)
+              .margin({ top: AppSizes.SPACING_SM })
+          }
+          .width('100%')
+          .height('100%')
+          .justifyContent(FlexAlign.Center)
+          .alignItems(HorizontalAlign.Center)
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/HomePage_yanglinsen/FavoritesPage'
+            })
+          })
+        }
+
+        GridItem() {
+          Column() {
+            Column() {
+              Text('❓')
+                .fontSize(AppSizes.ICON_BASE)
+                .fontColor(AppColors.TEXT_WHITE)
+            }
+            .width(50)
+            .height(50)
+            .borderRadius(AppSizes.RADIUS_LG)
+            .backgroundColor(AppColors.ENTRY_TEAL)
+            .justifyContent(FlexAlign.Center)
+
+            Text('帮助中心')
+              .fontSize(AppSizes.FONT_SM + 1)
+              .fontWeight(FontWeight.Medium)
+              .margin({ top: AppSizes.SPACING_SM })
+          }
+          .width('100%')
+          .height('100%')
+          .justifyContent(FlexAlign.Center)
+          .alignItems(HorizontalAlign.Center)
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/HomePage_yanglinsen/HelpCenterPage'
+            })
+          })
+        }
+      }
+      .columnsTemplate('1fr 1fr 1fr 1fr')
+      .rowsTemplate('1fr')
+      .columnsGap(AppSizes.SPACING_LG)
+      .rowsGap(AppSizes.SPACING_LG)
+      .height(120)
+      .padding({
+        left: 10,
+        right: 10,
+        top: AppSizes.SPACING_LG,
+        bottom: AppSizes.SPACING_LG
+      })
+      .backgroundColor(AppColors.BG_CARD)
+      .borderRadius({ topLeft: AppSizes.RADIUS_LG, topRight: AppSizes.RADIUS_LG, bottomLeft: 0, bottomRight: 0 })
+      .margin({ left: 10, right: 10, top: 0 })
+      .shadow({
+        radius: 10,
+        color: 'rgba(0,0,0,0.05)',
+        offsetX: 0,
+        offsetY: 4
+      })
+
+      // Hot Activities Section
+      Row() {
+        Text('热门活动')
+          .fontSize(18)
+          .fontWeight(FontWeight.Bold)
+        Text('查看全部 >')
+          .fontSize(14)
+          .fontColor('#8E8E93')
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/ActivityPage_wuguixing/ActivityPage'
+            })
+          })
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.SpaceBetween)
+      .padding({ left: 10, right: 10, top: 16 })
+      .backgroundColor(AppColors.BG_CARD)
+      .margin({ left: 10, right: 10 })
+      .borderRadius({ bottomLeft: AppSizes.RADIUS_LG, bottomRight: AppSizes.RADIUS_LG })
+    }
+  }
+
+  @Builder
+  TabBarBuilder() {
+    Row() {
+      ForEach([
+        { icon: '\u{1F3E0}', text: '首页', isActive: true },
+        { icon: '\u{1F4DD}', text: '活动', isActive: false },
+        { icon: '\u{1F4CB}', text: '记录', isActive: false },
+        { icon: '\u{1F464}', text: '我的', isActive: false }
+      ] as TabItem[], (item: TabItem) => {
+        Column() {
+          Text(item.icon)
+            .fontSize(24)
+          Text(item.text)
+            .fontSize(10)
+            .fontWeight(FontWeight.Medium)
+            .fontColor(item.isActive ? '#007AFF' : '#8E8E93')
+        }
+        .layoutWeight(1)
+        .alignItems(HorizontalAlign.Center)
+        .justifyContent(FlexAlign.Center)
+        .onClick(() => {
+          if (item.text === '活动') {
+            router.pushUrl({
+              url: 'pages/ActivityPage_wuguixing/ActivityPage'
+            })
+          } else if (item.text === '记录') {
+            router.pushUrl({
+              url: 'pages/RecordsPage_yangyang/RecordsPage'
+            })
+          } else if (item.text === '我的') {
+            router.pushUrl({
+              url: 'pages/ProfilePage_luojiaxin/ProfilePage'
+            })
+          }
+        })
+      })
     }
     .width('100%')
-    .height('100%')
-    .justifyContent(FlexAlign.Center)
-    .alignItems(HorizontalAlign.Center)
-    .onClick(onTap)
+    .height(55)
+    .backgroundColor('rgba(255, 255, 255, 0.85)')
+    .backdropBlur(10)
+    .border({ width: { top: 1 }, color: '#E5E5EA' })
+    .padding({ top: 20, bottom: 8 })
+    .position({ x: 0, y: '100%' })
+    .translate({ y: -55 })
+    .zIndex(6)
+    .alignItems(VerticalAlign.Center)
+    .onClick(() => {
+      // 点击Tab Bar区域时，让搜索框失去焦点
+      this.showSearchHistory = false
+    })
   }
 
   build() {
     Stack() {
-      // 固定头部区域
+      // Header Section with gradient background
       Column() {
-        // 状态栏占位
-        StatusBar()
-
-
-
-        // 用户信息
+        // User Info
         Row() {
           Image('https://images.unsplash.com/photo-1577202214328-c04b77cefb5d?w=100&h=100&fit=crop')
             .width(48)
             .height(48)
             .borderRadius(24)
             .border({ width: 2, color: Color.White })
+
           Column() {
             Text('下午好, 同学')
-              .fontSize(22)
-              .fontWeight(FontWeight.Bold)
+              .fontSize(20)
+              .fontWeight(FontWeight.Medium)
               .fontColor(Color.White)
             Text('今天也是充满活力的一天')
               .fontSize(14)
               .fontColor(Color.White)
-              .opacity(0.9)
+              .opacity(0.8)
           }
           .alignItems(HorizontalAlign.Start)
           .margin({ left: 12 })
+          .layoutWeight(1)
         }
         .width('100%')
-        .margin({ top: 10 })
+        .justifyContent(FlexAlign.Start)
 
-        // 搜索框
+        // Search Bar
         Row() {
-          Image($r("app.media.search"))
-            .width(20)
-            .height(20)
-            .margin({ right: 10 })
-          TextInput({ placeholder: '搜索你感兴趣的活动', text: this.searchText })
-            .placeholderColor('#99FFFFFF')
-            .layoutWeight(1)
-            .backgroundColor('transparent')
-            .height(40)
+          Text('\u{1F50D}')  // 🔍
+            .fontSize(20)
             .fontColor(Color.White)
+            .opacity(0.8)
+          TextInput({ placeholder: '搜索你感兴趣的活动', text: this.searchText })
+            .fontSize(14)
+            .fontColor(Color.White)
+            .backgroundColor('transparent')
+            .placeholderColor('rgba(255,255,255,0.8)')
+            .placeholderFont({ size: 14 })
+            .layoutWeight(1)
             .onChange((value: string) => {
               this.searchText = value
               this.showSearchHistory = true
@@ -379,70 +614,22 @@ export struct HomePage {
               this.showSearchHistory = true
             })
             .onBlur(() => {
+              // 延迟关闭搜索历史，以便用户能点击历史记录
               setTimeout(() => {
                 this.showSearchHistory = false
               }, 200)
             })
         }
         .width('100%')
-        .height(50)
+        .height(40)
         .backgroundColor('rgba(255,255,255,0.2)')
-        .borderRadius(AppSizes.RADIUS_SM)
+        .borderRadius(8)
         .padding({ left: 16, right: 16 })
         .margin({ top: 16 })
-
-        // 快捷入口
-        Grid() {
-          GridItem() {
-            this.QuickEntryBuilder('快捷预约', $r('app.media.ic_quick_appointment'), AppColors.ENTRY_ORANGE, () => {
-              prompt.showToast({
-                message: '快捷预约功能',
-                duration: 2000
-              })
-            })
-          }
-
-          GridItem() {
-            this.QuickEntryBuilder('定位签到', $r('app.media.ic_location_checkin'), AppColors.ENTRY_GREEN, () => {
-              this.handleCheckIn()
-            })
-          }
-
-          GridItem() {
-            this.QuickEntryBuilder('我的收藏', $r('app.media.ic_my_favorites'), AppColors.ENTRY_BLUE, () => {
-              router.pushUrl({
-                url: 'pages/HomePage_yanglinsen/FavoritesPage',
-                params: {
-                  favorites: this.favoriteActivities
-                }
-              })
-            })
-          }
-
-          GridItem() {
-            this.QuickEntryBuilder('帮助中心', $r('app.media.ic_help_center'), AppColors.ENTRY_TEAL, () => {
-              prompt.showToast({
-                message: '帮助中心',
-                duration: 2000
-              })
-            })
-          }
-        }
-        .columnsTemplate('1fr 1fr 1fr 1fr')
-        .rowsTemplate('1fr')
-        .columnsGap(AppSizes.SPACING_LG)
-        .rowsGap(AppSizes.SPACING_LG)
-        .height(100)
-        .padding({
-          left: AppSizes.SPACING_LG,
-          right: AppSizes.SPACING_LG,
-          top: AppSizes.SPACING_LG,
-          bottom: AppSizes.SPACING_LG
-        })
-        .margin({ top: 16 })
+        .justifyContent(FlexAlign.Start)
       }
       .width('100%')
-      .padding({ top: 16, left: 16, right: 16, bottom: 0 })
+      .padding({ top: 16, left: 16, right: 16, bottom: 70 })
       .linearGradient({
         angle: 135,
         colors: [['#007AFF', 0.0], ['#00C6FF', 1.0]]
@@ -451,44 +638,34 @@ export struct HomePage {
       .position({ x: 0, y: 0 })
       .zIndex(3)
       .onClick(() => {
+        // 点击Header区域时，让搜索框失去焦点
         this.showSearchHistory = false
       })
 
-      // 搜索历史
+      // Search History
       if (this.showSearchHistory && this.searchHistory.length > 0) {
         Column() {
           this.SearchHistoryBuilder()
         }
         .width('100%')
         .alignItems(HorizontalAlign.Center)
-        .position({ x: 0, y: 180 })
-        .zIndex(7)
+        .position({ x: 0, y: 124 }) // Position absolutely within Stack
+        .zIndex(7) // Ensure it's above other content
       }
 
-      // 热门活动标题
-      Row() {
-        Text('热门活动')
-          .fontSize(18)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#333333')
-        Blank()
-        Text('查看全部 >')
-          .fontSize(14)
-          .fontColor('#007AFF')
-          .onClick(() => {
-            router.pushUrl({
-              url: 'pages/ActivityPage_wuguixing/ActivityPage'
-            })
-          })
+      // Fixed Content Section (Quick Entry Grid + Hot Activities Section)
+      Column() {
+        this.NormalContentBuilder()
       }
       .width('100%')
-      .justifyContent(FlexAlign.SpaceBetween)
-      .padding({ left: AppSizes.SPACING_LG, right: AppSizes.SPACING_LG, top: 16, bottom: 8 })
-      .position({ x: 0, y: 350 })
-      .zIndex(2)
-      .backgroundColor(Color.White)
+      .position({ x: 0, y: 150 })
+      .zIndex(5)
+      .onClick(() => {
+        // 点击Fixed Content区域时，让搜索框失去焦点
+        this.showSearchHistory = false
+      })
 
-      // 可滚动的活动卡片
+      // Scrollable Activity Cards
       Scroll() {
         Column() {
           if (this.isSearching) {
@@ -538,19 +715,14 @@ export struct HomePage {
                         .padding({ left: 10, right: 10, top: 4, bottom: 4 })
                         .margin({ top: 8 })
 
-                      Image(this.favoriteStates.get(item.id) ? $r('app.media.souc') : $r('app.media.sous'))
-                        .width(24)
-                        .height(24)
-                        .margin({ left: 96, top: 8 })
-                        .position({ x: 96 })
-                        .onClick(() => {
-                          this.favoriteStates.set(item.id, !this.favoriteStates.get(item.id))
-                          if (this.favoriteStates.get(item.id)) {
-                            this.favoriteActivities.push(item)
-                          } else {
-                            this.favoriteActivities = this.favoriteActivities.filter(activity => activity.id !== item.id)
-                          }
-                        })
+                                    Image(this.favoriteStates.get(item.id) ? $r('app.media.souc') : $r('app.media.sous'))
+                .width(24)
+                .height(24)
+                .margin({ left: 96, top: 8 })
+                .position({ x: 96 })
+                .onClick(() => {
+                  this.toggleFavorite(item)
+                })
                     }
                   }
                   .alignItems(HorizontalAlign.Start)
@@ -572,7 +744,7 @@ export struct HomePage {
                 })
               })
             }
-            .padding({ top: 370, bottom: 80 })
+            .padding({ top: 290, bottom: 80 }) // 减少顶部padding，为热门活动标题留出空间
           }
         }
       }
@@ -582,13 +754,18 @@ export struct HomePage {
       .height('100%')
       .zIndex(2)
       .onClick(() => {
+        // 点击Scroll区域时，让搜索框失去焦点
         this.showSearchHistory = false
       })
+
+      // Tab Bar
+      this.TabBarBuilder()
     }
     .width('100%')
     .height('100%')
     .backgroundColor('#F2F2F7')
     .onClick(() => {
+      // 点击Stack区域时，让搜索框失去焦点
       this.showSearchHistory = false
     })
   }

@@ -1,381 +1,431 @@
 import router from '@ohos.router'
-import { CommonButton } from '../../common/components/CommonButton'
+import { CommonCard } from '../../common/components/CommonCard'
+
+interface Activity {
+  id: string
+  title: string
+  time: string
+  location: string
+  image: string
+  status: string
+  type: string
+  participants: number
+  maxParticipants: number
+  description: string
+}
 
 @Entry
 @Component
 export struct ActivityPage {
-  @State name: string = ''
-  @State studentId: string = ''
-  @State phone: string = ''
+  @State activities: Activity[] = [
+    {
+      id: '1',
+      title: 'HarmonyOS 技术分享会',
+      time: '今天 19:00 - 21:00',
+      location: '教学楼 B201',
+      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300&h=200&fit=crop',
+      status: '火热报名中',
+      type: '技术讲座',
+      participants: 23,
+      maxParticipants: 100,
+      description: '深入了解HarmonyOS开发技术，分享实际项目经验'
+    },
+    {
+      id: '2',
+      title: '校园摄影大赛作品展',
+      time: '周三至周五 全天',
+      location: '图书馆一楼大厅',
+      image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=300&h=200&fit=crop',
+      status: '进行中',
+      type: '艺术展览',
+      participants: 156,
+      maxParticipants: 200,
+      description: '展示学生优秀摄影作品，感受艺术之美'
+    },
+    {
+      id: '3',
+      title: '王者荣耀校园联赛',
+      time: '周六至周天 全天',
+      location: '电竞馆一楼',
+      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=200&fit=crop',
+      status: '火热报名中',
+      type: '电竞比赛',
+      participants: 89,
+      maxParticipants: 128,
+      description: '校园电竞盛事，展现你的游戏技巧'
+    },
+    {
+      id: '4',
+      title: '创业分享交流会',
+      time: '下周二 14:00 - 16:00',
+      location: '创新创业中心',
+      image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=300&h=200&fit=crop',
+      status: '即将开始',
+      type: '创业讲座',
+      participants: 45,
+      maxParticipants: 80,
+      description: '优秀校友分享创业经验和心得'
+    },
+    {
+      id: '5',
+      title: '春季运动会',
+      time: '下周五-六 08:00 - 18:00',
+      location: '学校田径场',
+      image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=300&h=200&fit=crop',
+      status: '火热报名中',
+      type: '体育赛事',
+      participants: 234,
+      maxParticipants: 500,
+      description: '展现青春活力，挑战运动极限'
+    },
+    {
+      id: '6',
+      title: '音乐节演出',
+      time: '下周日 19:00 - 22:00',
+      location: '学校大礼堂',
+      image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop',
+      status: '火热报名中',
+      type: '文艺演出',
+      participants: 167,
+      maxParticipants: 300,
+      description: '精彩的音乐演出，感受艺术魅力'
+    }
+  ]
   
+  @State selectedCategory: string = '全部'
+  @State filteredActivities: Activity[] = this.activities
+  
+  private categories: string[] = ['全部', '技术讲座', '艺术展览', '电竞比赛', '创业讲座', '体育赛事', '文艺演出']
+
+  aboutToAppear() {
+    this.filterActivities()
+  }
+
+  filterActivities() {
+    if (this.selectedCategory === '全部') {
+      this.filteredActivities = this.activities
+    } else {
+      this.filteredActivities = this.activities.filter(activity => activity.type === this.selectedCategory)
+    }
+  }
+
+  getStatusColor(status: string): string {
+    switch (status) {
+      case '火热报名中':
+        return '#FF6B6B'
+      case '进行中':
+        return '#4ECDC4'
+      case '即将开始':
+        return '#45B7D1'
+      case '已结束':
+        return '#96CEB4'
+      default:
+        return '#DEDEDE'
+    }
+  }
+
+  getStatusBgColor(status: string): string {
+    switch (status) {
+      case '火热报名中':
+        return '#FFE8E8'
+      case '进行中':
+        return '#E8F8F7'
+      case '即将开始':
+        return '#E8F4FD'
+      case '已结束':
+        return '#F0F8F4'
+      default:
+        return '#F5F5F5'
+    }
+  }
+
   build() {
-    Scroll() {
+    Column() {
+      // 头部渐变背景
       Column() {
-        // 顶部活动封面和标题
-        Stack({ alignContent: Alignment.Bottom }) {
-          // 使用蓝色渐变背景替代图片
-          Row()
-            .width('100%')
-            .height(200)
-            .borderRadius({ topLeft: 16, topRight: 16 })
-            .linearGradient({
-              angle: 135,
-              colors: [['#007AFF', 0.0], ['#00C6FF', 1.0]]
+        Row() {
+          Image($r('app.media.back'))
+            .width(24)
+            .height(24)
+            .fillColor(Color.White)
+            .onClick(() => {
+              router.back()
             })
           
-          Column() {
-            Text('HarmonyOS 技术分享会')
-              .fontSize(24)
-              .fontWeight(FontWeight.Bold)
-              .fontColor(Color.White)
+          Text('校园活动')
+            .fontSize(20)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(Color.White)
+            .layoutWeight(1)
+            .textAlign(TextAlign.Center)
             
-            Row() {
-              Image('https://cdn-icons-png.flaticon.com/128/2784/2784459.png')
-                .width(16)
-                .height(16)
-              Text('今天 19:00 - 21:00')
-                .fontSize(14)
-                .fontColor(Color.White)
-                .margin({ left: 4 })
-            }
-            .margin({ top: 8, bottom: 8 })
+          Text('')
+            .width(24)
+        }
+        .width('100%')
+        .height(56)
+        .padding({ left: 16, right: 16 })
+        .justifyContent(FlexAlign.SpaceBetween)
+        .alignItems(VerticalAlign.Center)
+      }
+      .width('100%')
+      .padding({ top: 44, bottom: 16 })
+      .linearGradient({
+        angle: 135,
+        colors: [['#667eea', 0.0], ['#764ba2', 1.0]]
+      })
 
-            Row() {
-              Image('https://cdn-icons-png.flaticon.com/128/2838/2838912.png')
-                .width(16)
-                .height(16)
-              Text('教学楼 B201')
-                .fontSize(14)
-                .fontColor(Color.White)
-                .margin({ left: 4 })
+      Scroll() {
+        Column() {
+          // 分类选择器
+          Column() {
+            Text('活动分类')
+              .fontSize(16)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#333333')
+              .alignSelf(ItemAlign.Start)
+              .margin({ bottom: 12 })
+
+            Scroll() {
+              Row() {
+                ForEach(this.categories, (category: string) => {
+                  Text(category)
+                    .fontSize(14)
+                    .fontWeight(FontWeight.Medium)
+                    .fontColor(this.selectedCategory === category ? Color.White : '#667eea')
+                    .backgroundColor(this.selectedCategory === category ? '#667eea' : '#F0F2FF')
+                    .borderRadius(20)
+                    .padding({ left: 16, right: 16, top: 8, bottom: 8 })
+                    .margin({ right: 12 })
+                    .onClick(() => {
+                      this.selectedCategory = category
+                      this.filterActivities()
+                    })
+                })
+              }
+              .width('100%')
             }
+            .scrollable(ScrollDirection.Horizontal)
+            .scrollBar(BarState.Off)
           }
           .width('100%')
           .padding(16)
-          .backgroundImage('linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)')
-        }
-        .margin({ bottom: 16 })
+          .backgroundColor(Color.White)
+          .borderRadius(16)
+          .margin({ top: 16, bottom: 16 })
+          .shadow({
+            radius: 8,
+            color: 'rgba(0,0,0,0.1)',
+            offsetX: 0,
+            offsetY: 4
+          })
 
-        // 剩余名额显示
-        Row() {
-          Text('剩余名额')
-            .fontSize(16)
-            .fontColor('#666666')
-          Text('23/100')
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#007AFF')
-            .margin({ left: 8 })
-        }
-        .width('100%')
-        .justifyContent(FlexAlign.Center)
-        .margin({ bottom: 20 })
-
-        // 主办方信息
-        Column() {
-          Row() {
-            Image('https://cdn-icons-png.flaticon.com/128/1068/1068727.png')
-              .width(24)
-              .height(24)
-            Text('主办方')
-              .fontSize(16)
-              .fontWeight(FontWeight.Medium)
-              .margin({ left: 8 })
-          }
-          .margin({ bottom: 12 })
-
-          Text('计算机学院 & HarmonyOS 技术俱乐部')
-            .fontSize(15)
-            .fontColor('#333333')
-        }
-        .width('100%')
-        .padding(16)
-        .backgroundColor(Color.White)
-        .borderRadius(12)
-        .margin({ bottom: 16 })
-
-        // 特邀嘉宾
-        Column() {
-          Row() {
-            Image('https://cdn-icons-png.flaticon.com/128/1828/1828884.png')
-              .width(24)
-              .height(24)
-            Text('特邀嘉宾')
-              .fontSize(16)
-              .fontWeight(FontWeight.Medium)
-              .margin({ left: 8 })
-          }
-          .margin({ bottom: 16 })
-
+          // 活动统计
           Row() {
             Column() {
-              Image('https://cdn-icons-png.flaticon.com/128/4140/4140048.png')
-                .width(64)
-                .height(64)
-                .borderRadius(32)
-              Text('王教授')
-                .fontSize(14)
-                .margin({ top: 8 })
-              Text('系统架构专家')
+              Text(`${this.filteredActivities.length}`)
+                .fontSize(24)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#667eea')
+              Text('活动总数')
                 .fontSize(12)
-                .fontColor('#666666')
-                .margin({ top: 4 })
+                .fontColor('#999999')
             }
+            .layoutWeight(1)
 
             Column() {
-              Image('https://cdn-icons-png.flaticon.com/128/4140/4140047.png')
-                .width(64)
-                .height(64)
-                .borderRadius(32)
-              Text('李学姐')
-                .fontSize(14)
-                .margin({ top: 8 })
-              Text('资深开发者')
+              Text(`${this.filteredActivities.filter(a => a.status === '火热报名中').length}`)
+                .fontSize(24)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#FF6B6B')
+              Text('报名中')
                 .fontSize(12)
-                .fontColor('#666666')
-                .margin({ top: 4 })
+                .fontColor('#999999')
             }
-            .margin({ left: 32, right: 32 })
+            .layoutWeight(1)
 
             Column() {
-              Image('https://cdn-icons-png.flaticon.com/128/4140/4140051.png')
-                .width(64)
-                .height(64)
-                .borderRadius(32)
-              Text('张学长')
-                .fontSize(14)
-                .margin({ top: 8 })
-              Text('技术总监')
+              Text(`${this.filteredActivities.filter(a => a.status === '进行中').length}`)
+                .fontSize(24)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#4ECDC4')
+              Text('进行中')
                 .fontSize(12)
-                .fontColor('#666666')
-                .margin({ top: 4 })
+                .fontColor('#999999')
             }
-          }
-        }
-        .width('100%')
-        .padding(16)
-        .backgroundColor(Color.White)
-        .borderRadius(12)
-        .margin({ bottom: 16 })
-
-        // 活动流程
-        Column() {
-          Row() {
-            Image('https://cdn-icons-png.flaticon.com/128/3652/3652191.png')
-              .width(24)
-              .height(24)
-            Text('活动流程')
-              .fontSize(16)
-              .fontWeight(FontWeight.Medium)
-              .margin({ left: 8 })
-          }
-          .margin({ bottom: 16 })
-
-          Column({ space: 24 }) {
-            Row() {
-              Circle({ width: 12, height: 12 })
-                .fill('#007AFF')
-              Column() {
-                Text('19:00 - 19:15')
-                  .fontSize(14)
-                  .fontWeight(FontWeight.Medium)
-                Text('开场与介绍')
-                  .fontSize(14)
-                  .fontColor('#666666')
-                  .margin({ top: 4 })
-              }
-              .alignItems(HorizontalAlign.Start)
-              .margin({ left: 12 })
-            }
-
-            Row() {
-              Circle({ width: 12, height: 12 })
-                .fill('#007AFF')
-              Column() {
-                Text('19:15 - 20:30')
-                  .fontSize(14)
-                  .fontWeight(FontWeight.Medium)
-                Text('HarmonyOS 核心技术分享')
-                  .fontSize(14)
-                  .fontColor('#666666')
-                  .margin({ top: 4 })
-              }
-              .alignItems(HorizontalAlign.Start)
-              .margin({ left: 12 })
-            }
-
-            Row() {
-              Circle({ width: 12, height: 12 })
-                .fill('#007AFF')
-              Column() {
-                Text('20:30 - 21:00')
-                  .fontSize(14)
-                  .fontWeight(FontWeight.Medium)
-                Text('Q&A 互动环节')
-                  .fontSize(14)
-                  .fontColor('#666666')
-                  .margin({ top: 4 })
-              }
-              .alignItems(HorizontalAlign.Start)
-              .margin({ left: 12 })
-            }
-          }
-        }
-        .width('100%')
-        .padding(16)
-        .backgroundColor(Color.White)
-        .borderRadius(12)
-        .margin({ bottom: 16 })
-
-        // 注意事项
-        Column() {
-          Row() {
-            Image('https://cdn-icons-png.flaticon.com/128/1827/1827301.png')
-              .width(24)
-              .height(24)
-            Text('注意事项')
-              .fontSize(16)
-              .fontWeight(FontWeight.Medium)
-              .margin({ left: 8 })
-          }
-          .margin({ bottom: 16 })
-
-          Column({ space: 12 }) {
-            Row() {
-              Circle({ width: 4, height: 4 })
-                .fill('#666666')
-              Text('请提前10分钟到场签到')
-                .fontSize(14)
-                .fontColor('#666666')
-                .margin({ left: 8 })
-            }
-
-            Row() {
-              Circle({ width: 4, height: 4 })
-                .fill('#666666')
-              Text('现场提供免费纪念品')
-                .fontSize(14)
-                .fontColor('#666666')
-                .margin({ left: 8 })
-            }
-
-            Row() {
-              Circle({ width: 4, height: 4 })
-                .fill('#666666')
-              Text('请将手机调至静音模式')
-                .fontSize(14)
-                .fontColor('#666666')
-                .margin({ left: 8 })
-            }
-          }
-        }
-        .width('100%')
-        .padding(16)
-        .backgroundColor(Color.White)
-        .borderRadius(12)
-        .margin({ bottom: 16 })
-
-        // 填写信息
-        Column() {
-          Row() {
-            Image('https://cdn-icons-png.flaticon.com/128/3064/3064155.png')
-              .width(24)
-              .height(24)
-            Text('填写信息')
-              .fontSize(16)
-              .fontWeight(FontWeight.Medium)
-              .margin({ left: 8 })
-          }
-          .margin({ bottom: 16 })
-
-          TextInput({ placeholder: '请输入您的真实姓名' })
-            .width('100%')
-            .height(48)
-            .margin({ bottom: 12 })
-            .backgroundColor('#F5F5F5')
-            .borderRadius(8)
-            .padding({ left: 16, right: 16 })
-            .fontSize(14)
-            .onChange((value: string) => {
-              this.name = value
-            })
-
-          TextInput({ placeholder: '请输入您的学号' })
-            .width('100%')
-            .height(48)
-            .margin({ bottom: 12 })
-            .backgroundColor('#F5F5F5')
-            .borderRadius(8)
-            .padding({ left: 16, right: 16 })
-            .fontSize(14)
-            .onChange((value: string) => {
-              this.studentId = value
-            })
-
-          TextInput({ placeholder: '请输入您的手机号' })
-            .width('100%')
-            .height(48)
-            .backgroundColor('#F5F5F5')
-            .borderRadius(8)
-            .padding({ left: 16, right: 16 })
-            .fontSize(14)
-            .onChange((value: string) => {
-              this.phone = value
-            })
-
-          Button() {
-            Text('提交预约')
-              .fontSize(16)
-              .fontColor(Color.White)
+            .layoutWeight(1)
           }
           .width('100%')
-          .height(48)
-          .margin({ top: 24 })
-          .backgroundColor('#007AFF')
-          .borderRadius(24)
-          .onClick(() => {
-            this.handleSubmit()
+          .padding(16)
+          .backgroundColor(Color.White)
+          .borderRadius(16)
+          .margin({ bottom: 16 })
+          .shadow({
+            radius: 8,
+            color: 'rgba(0,0,0,0.1)',
+            offsetX: 0,
+            offsetY: 4
+          })
+
+          // 活动列表
+          ForEach(this.filteredActivities, (activity: Activity) => {
+            Column() {
+              // 活动图片
+              Image(activity.image)
+                .width('100%')
+                .height(180)
+                .borderRadius({ topLeft: 16, topRight: 16 })
+                .objectFit(ImageFit.Cover)
+
+              // 活动信息
+              Column() {
+                // 标题和状态
+                Row() {
+                  Text(activity.title)
+                    .fontSize(16)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor('#333333')
+                    .layoutWeight(1)
+                    .maxLines(2)
+                    .textOverflow({ overflow: TextOverflow.Ellipsis })
+
+                  Text(activity.status)
+                    .fontSize(11)
+                    .fontWeight(FontWeight.Medium)
+                    .fontColor(this.getStatusColor(activity.status))
+                    .backgroundColor(this.getStatusBgColor(activity.status))
+                    .borderRadius(12)
+                    .padding({ left: 8, right: 8, top: 4, bottom: 4 })
+                }
+                .width('100%')
+                .margin({ bottom: 8 })
+                .alignItems(VerticalAlign.Top)
+
+                // 类型标签
+                Text(activity.type)
+                  .fontSize(12)
+                  .fontColor('#667eea')
+                  .backgroundColor('#F0F2FF')
+                  .borderRadius(8)
+                  .padding({ left: 8, right: 8, top: 4, bottom: 4 })
+                  .alignSelf(ItemAlign.Start)
+                  .margin({ bottom: 8 })
+
+                // 时间和地点
+                Row() {
+                  Text('🕐')
+                    .fontSize(14)
+                  Text(activity.time)
+                    .fontSize(13)
+                    .fontColor('#666666')
+                    .margin({ left: 4 })
+                }
+                .margin({ bottom: 4 })
+
+                Row() {
+                  Text('📍')
+                    .fontSize(14)
+                  Text(activity.location)
+                    .fontSize(13)
+                    .fontColor('#666666')
+                    .margin({ left: 4 })
+                }
+                .margin({ bottom: 8 })
+
+                // 参与人数进度条
+                Column() {
+                  Row() {
+                    Text('报名进度')
+                      .fontSize(12)
+                      .fontColor('#666666')
+                    Blank()
+                    Text(`${activity.participants}/${activity.maxParticipants}`)
+                      .fontSize(12)
+                      .fontColor('#667eea')
+                      .fontWeight(FontWeight.Medium)
+                  }
+                  .width('100%')
+                  .margin({ bottom: 4 })
+
+                  Progress({
+                    value: activity.participants,
+                    total: activity.maxParticipants,
+                    type: ProgressType.Linear
+                  })
+                    .width('100%')
+                    .height(4)
+                    .backgroundColor('#F0F0F0')
+                    .color('#667eea')
+                    .borderRadius(2)
+                }
+                .width('100%')
+                .margin({ bottom: 8 })
+
+                // 描述
+                Text(activity.description)
+                  .fontSize(13)
+                  .fontColor('#888888')
+                  .maxLines(2)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .margin({ bottom: 12 })
+
+                // 操作按钮
+                Row() {
+                  Button('查看详情')
+                    .fontSize(14)
+                    .fontColor('#667eea')
+                    .backgroundColor('#F0F2FF')
+                    .borderRadius(20)
+                    .height(36)
+                    .layoutWeight(1)
+                    .margin({ right: 8 })
+                    .onClick(() => {
+                      router.pushUrl({
+                        url: 'pages/ActivityDetailPage',
+                        params: { activity: activity }
+                      })
+                    })
+
+                  Button(activity.status === '火热报名中' ? '立即报名' : '了解更多')
+                    .fontSize(14)
+                    .fontColor(Color.White)
+                    .backgroundColor(activity.status === '火热报名中' ? '#FF6B6B' : '#667eea')
+                    .borderRadius(20)
+                    .height(36)
+                    .layoutWeight(1)
+                    .onClick(() => {
+                      // 处理报名或了解更多逻辑
+                    })
+                }
+                .width('100%')
+              }
+              .width('100%')
+              .padding(16)
+            }
+            .width('100%')
+            .backgroundColor(Color.White)
+            .borderRadius(16)
+            .margin({ bottom: 16 })
+            .shadow({
+              radius: 8,
+              color: 'rgba(0,0,0,0.1)',
+              offsetX: 0,
+              offsetY: 4
+            })
+            .onClick(() => {
+              router.pushUrl({
+                url: 'pages/ActivityDetailPage',
+                params: { activity: activity }
+              })
+            })
           })
         }
-        .width('100%')
         .padding(16)
-        .backgroundColor(Color.White)
-        .borderRadius(12)
-        .margin({ bottom: 24 })
       }
-      .width('100%')
-      .padding(16)
+      .layoutWeight(1)
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#F2F2F7')
-    .scrollBar(BarState.Off)
-  }
-
-  handleSubmit() {
-    if (!this.name || !this.studentId || !this.phone) {
-      AlertDialog.show({
-        title: '提示',
-        message: '请填写完整信息',
-        confirm: {
-          value: '确定',
-          action: () => {
-            console.info('Dialog confirmed')
-          }
-        }
-      })
-      return
-    }
-
-    AlertDialog.show({
-      title: '预约成功',
-      message: '您已成功预约活动',
-      confirm: {
-        value: '确定',
-        action: () => {
-          router.pushUrl({ url: 'pages/RecordsPage_yangyang/RecordsPage' })
-        }
-      }
-    })
+    .backgroundColor('#F8F9FF')
   }
 }
